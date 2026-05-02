@@ -1,0 +1,28 @@
+server:
+  port: 8012
+
+spring:
+  application:
+    name: clientes
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/supermercado
+    username: user
+    password: user123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  sql:
+    init:
+      mode: always
+
+eureka:
+  instance:
+    hostname: eureka
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+    registry-fetch-interval-seconds: 5
+    initial-instance-info-replication-interval-seconds: 5

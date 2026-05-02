@@ -1,0 +1,78 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="https://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link rel="stylesheet" href="/static/bootstrap.min.css"></link>-->
+<!--    <title>Productos Supermercado</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div>-->
+<!--    <div>-->
+<!--        <nav class="navbar navbar-expand-lg bg-success" data-bs-theme="dark">-->
+<!--            <div class="container-fluid">-->
+<!--                <a class="navbar-brand" href="#">Supermercado</a>-->
+<!--                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                    <span class="navbar-toggler-icon"></span>-->
+<!--                </button>-->
+<!--                <div class="collapse navbar-collapse" id="navbarColor01">-->
+<!--                    <ul class="navbar-nav me-auto">-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link active" href="#">Inicio-->
+<!--                              <span class="visually-hidden">(current)</span>-->
+<!--                          </a>-->
+<!--                      </li>-->
+<!--                      <li class="nav-item">-->
+<!--                          <a class="nav-link" href="#">Productos</a>-->
+<!--                      </li>-->
+<!--                      <li class="nav-item">-->
+<!--                          <a class="nav-link" href="#">Clientes</a>-->
+<!--                      </li>-->
+<!--                      <li class="nav-item">-->
+<!--                          <a class="nav-link" href="#">Ventas</a>-->
+<!--                      </li>-->
+<!--                      <li class="nav-item">-->
+<!--                          <a class="nav-link" href="#">Consolidado</a>-->
+<!--                      </li>-->
+<!--                  </ul>-->
+<!--              </div>-->
+<!--          </div>-->
+<!--      </nav>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <h1 class="text-secondary">Listado de Productos</h1>-->
+<!--        <div id="productos-lista"></div>-->
+<!--        <br/>-->
+<!--        <a href="/api/productos/create">Crear un Producto</a >-->
+<!--        <br>-->
+<!--        <table class="table-sm table-bordered border-dark border=6">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <td>Código</td >-->
+<!--                <td>Categoria</td >-->
+<!--                <td>Nombre</td>-->
+<!--                <td>Precio Compra</td>-->
+<!--                <td>Iva</td>-->
+<!--                <td>Precio Venta</td>-->
+<!--            </tr >-->
+<!--            </thead >-->
+<!--            <tbody>-->
+<!--            <tr th:each="producto : ${productol}">-->
+<!--                <td th:text="${producto.ID_producto}"></td >-->
+<!--                <td th:text="${producto.ID_categoria}"></td >-->
+<!--                <td th:text="${producto.nombre_producto}"></td >-->
+<!--                <td th:text="${producto.precio_compra}"></td >-->
+<!--                <td th:text="${producto.iva_compra}"></td >-->
+<!--                <td th:text="${producto.precio_venta}"></td >-->
+<!--                <td>-->
+<!--                    <a th:href="@{/findById/} + ${producto.ID_producto}">Editar</a >-->
+<!--                    <a th:href="@{/eliminar/} + ${producto.ID_producto}">Eliminar</a >-->
+<!--                </td>-->
+
+<!--            </tr >-->
+<!--            </tbody>-->
+<!--        </table >-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="static/conexion.js"></script>-->
+<!--</body>-->
+<!--</html>-->

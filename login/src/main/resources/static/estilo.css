@@ -1,0 +1,21 @@
+:root,[data-bs-theme=light]{--bs-teal: #20c997;
+    --bs-primary: #78c2ad;
+    --bs-secondary:#f3969a;
+    --bs-success:#56cc9d;}
+
+body {
+    margin-top: 50px;
+    margin-left: 250px;
+    padding: 0;
+    box-sizing: border-box
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
