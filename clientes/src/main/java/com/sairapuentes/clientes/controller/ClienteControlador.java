@@ -21,7 +21,8 @@ public class ClienteControlador {
     }
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponse> findById(@PathVariable Integer id){
-        return ResponseEntity.ok(clienteServicio.findById(id));
+        ClienteResponse cliente = clienteServicio.findById(id);
+        return ResponseEntity.ok(cliente);
     }
     @PutMapping("/{id}")
     public ResponseEntity<ClienteResponse> actualizar(
@@ -30,9 +31,9 @@ public class ClienteControlador {
                  ClienteResponse response = clienteServicio.update(id, request);
                  return ResponseEntity.ok(response);
     }
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<ClienteResponse> eliminar(@PathVariable Integer id){
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> eliminar(@PathVariable Integer id){
+        clienteServicio.eliminar(id);
+        return ResponseEntity.ok("Cliente eliminado correctamente");
     }
 }

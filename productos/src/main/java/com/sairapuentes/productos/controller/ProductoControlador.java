@@ -17,6 +17,7 @@ public class ProductoControlador {
 
     @Autowired
     private IProductoServicio productoServicio;
+
     @GetMapping
     public ResponseEntity<List<ProductoResponse>> listar(){
 
@@ -27,6 +28,7 @@ public class ProductoControlador {
         ProductoResponse response = productoServicio.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
     @GetMapping("/categoria/{idCategoria}")
     public ResponseEntity<List<ProductoResponse>> findByCategoria(@PathVariable Integer idCategoria){
         List<ProductoResponse> productoCategoriaList = productoServicio.findByIdCategoria(idCategoria);
@@ -39,6 +41,12 @@ public class ProductoControlador {
                 ProductoResponse response = productoServicio.update(id, request);
                 return ResponseEntity.ok(response);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Integer id){
+        productoServicio.eliminar(id);
+        return ResponseEntity.ok("Producto eliminado correctamente");
+    }
+
 
 
 }

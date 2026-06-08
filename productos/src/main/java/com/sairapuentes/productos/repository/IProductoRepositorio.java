@@ -9,7 +9,7 @@ import java.util.List;
 public interface IProductoRepositorio extends JpaRepository<Producto, Integer> {
 
     //Consulta para nombre producto
-    List<Producto> findByIdCategoria(int idCategoria);
+    List<Producto> findByCategoria_IdCategoria(int idCategoria);
 
 }
 

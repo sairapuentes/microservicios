@@ -6,7 +6,7 @@ public class ProductoRequest {
     private double precioCompra;
     private double ivaCompra;
 
-    public ProductoRequest(ProductoRequest request) {
+    public ProductoRequest() {
     }
 
     public ProductoRequest(int idCategoria, String nombreProducto, double precioCompra, double ivaCompra) {

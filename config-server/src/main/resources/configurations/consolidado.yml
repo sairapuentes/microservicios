@@ -6,7 +6,7 @@ spring:
     name: consolidado
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/supermercado
+    url: jdbc:mysql://mysql:3306/db_consolidado
     username: user
     password: user123
   jpa:
