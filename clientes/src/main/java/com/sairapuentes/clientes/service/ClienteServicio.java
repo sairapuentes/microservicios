@@ -6,6 +6,9 @@ import com.sairapuentes.clientes.entity.Clientes;
 import com.sairapuentes.clientes.repository.IClienteRepositorio;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ClienteServicio implements IClienteServicio{
 
@@ -15,6 +18,13 @@ public class ClienteServicio implements IClienteServicio{
         this.clienteRepositorio = clienteRepositorio;
     }
 
+    @Override
+    public List<ClienteResponse> findAll(){
+        return ((List<Clientes>) clienteRepositorio.findAll())
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
     @Override
     public ClienteResponse findById(int id) {
         Clientes cliente = clienteRepositorio.findById(id)
@@ -48,7 +58,9 @@ public class ClienteServicio implements IClienteServicio{
 
     @Override
     public void eliminar(int id) {
-        clienteRepositorio.deleteById(id);
+        Clientes cliente = clienteRepositorio.findById(id)
+                        .orElseThrow(()-> new RuntimeException("Cliente no encontrado"));
+        clienteRepositorio.delete(cliente);
     }
 
     private ClienteResponse mapToResponse(Clientes cliente) {

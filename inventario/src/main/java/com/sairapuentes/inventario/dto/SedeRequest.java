@@ -1,6 +1,9 @@
 package com.sairapuentes.inventario.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class SedeRequest {
+    @NotBlank(message = "El nombre de la sede es obligatorio")
     private String nombreSede;
     private String direccion;
     private String ciudad;

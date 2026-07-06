@@ -1,9 +1,15 @@
 package com.sairapuentes.productos.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
 public class ProductoRequest {
     private int idCategoria;
+    @NotBlank(message="El nombre del producto es obligatorio")
     private String nombreProducto;
+    @Positive(message="El precio de compra debe ser mayor que cero")
     private double precioCompra;
+    @Positive(message="El IVA debe ser mayor que cero")
     private double ivaCompra;
 
     public ProductoRequest() {

@@ -1,23 +1,26 @@
 package com.sairapuentes.ventas.dto;
 
+import jakarta.validation.constraints.Positive;
+
 public class VentaRequest {
     private int idVenta;
     private int idCliente;
     private int idCiudad;
     private int idProducto;
+    @Positive
     private int cantidad;
-    private double valorTotal;
+    private int idSede;
 
     public VentaRequest() {
     }
 
-    public VentaRequest(int idVenta, int idCliente, int idCiudad, int idProducto, int cantidad, double valorTotal) {
+    public VentaRequest(int idVenta, int idCliente, int idCiudad, int idProducto, int cantidad,int idSede) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
         this.idCiudad = idCiudad;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
-        this.valorTotal = valorTotal;
+        this.idSede = idSede;
     }
 
     public int getIdVenta() {
@@ -60,12 +63,11 @@ public class VentaRequest {
         this.cantidad = cantidad;
     }
 
-    public double getValorTotal() {
-        return valorTotal;
+    public int getIdSede() {
+        return idSede;
     }
 
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setIdSede(int idSede) {
+        this.idSede = idSede;
     }
-
 }

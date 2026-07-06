@@ -39,6 +39,14 @@ public class CategoriaServicio implements ICategoriaServicio {
         return mapToResponse(guardar);
     }
     @Override
+    public CategoriaResponse update(int id, CategoriaRequest request){
+        Categoria categoria = categoriaRepositorio.findById(id)
+                .orElseThrow(()-> new RuntimeException("La categoria no fue encontrada"));
+        categoria.setNombreCategoria(request.getNombreCategoria());
+        Categoria actualizar = categoriaRepositorio.save(categoria);
+        return mapToResponse(actualizar);
+    }
+    @Override
     public void eliminar(int id){
         Categoria categoria = categoriaRepositorio.findById(id)
                 .orElseThrow(()-> new RuntimeException("Categoria no encontrada"));

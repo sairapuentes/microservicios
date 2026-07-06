@@ -44,6 +44,11 @@ spring:
           uri: lb://INVENTARIO
           predicates:
             - Path=/api/inventario/**
+
+        - id: sede
+          uri: lb://INVENTARIO
+          predicates:
+            - Path=/api/sede/**
 eureka:
   client:
     register-with-eureka: true

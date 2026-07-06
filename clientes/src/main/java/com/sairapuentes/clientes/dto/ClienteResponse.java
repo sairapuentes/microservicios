@@ -3,13 +3,13 @@ package com.sairapuentes.clientes.dto;
 public class ClienteResponse {
     private int idCliente;
     private String nombreCliente;
-    private int telefonoCliente;
+    private String telefonoCliente;
     private String emailCliente;
 
     public ClienteResponse() {
     }
 
-    public ClienteResponse(int idCliente, String nombreCliente, int telefonoCliente, String emailCliente) {
+    public ClienteResponse(int idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.telefonoCliente = telefonoCliente;
@@ -32,11 +32,11 @@ public class ClienteResponse {
         this.nombreCliente = nombreCliente;
     }
 
-    public int getTelefonoCliente() {
+    public String getTelefonoCliente() {
         return telefonoCliente;
     }
 
-    public void setTelefonoCliente(int telefonoCliente) {
+    public void setTelefonoCliente(String telefonoCliente) {
         this.telefonoCliente = telefonoCliente;
     }
 

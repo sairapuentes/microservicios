@@ -6,7 +6,7 @@ import com.sairapuentes.clientes.dto.ClienteResponse;
 import java.util.List;
 
 public interface IClienteServicio {
-    //creo que no List<ClienteResponse> findAll();
+    List<ClienteResponse> findAll();
     ClienteResponse findById(int id);
     ClienteResponse save(ClienteRequest request);
     ClienteResponse update(int id, ClienteRequest request);

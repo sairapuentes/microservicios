@@ -61,7 +61,8 @@ public class ProductoServicio implements IProductoServicio {
         producto.setIvaCompra(request.getIvaCompra());
 
         //Operacion para que se actualice el precio de venta segun el valor de compra e iva ingresados
-        double precioVenta = request.getPrecioCompra() * (1 + request.getIvaCompra() / 100);
+        double precioVenta = request.getPrecioCompra() * (1 + request.getIvaCompra()/100);
+        precioVenta = Math.round(precioVenta * 100.0)/100.0;
         producto.setPrecioVenta(precioVenta);
 
         Producto guardar = productoRepositorio.save(producto);
@@ -78,11 +79,18 @@ public class ProductoServicio implements IProductoServicio {
                 .orElseThrow(() -> new RuntimeException("El producto no fue encontrado"));
         producto.setCategoria(categoria);
         producto.setNombreProducto(request.getNombreProducto());
+        if(request.getPrecioCompra() <= 0){
+            throw new RuntimeException("Precio invalido");
+        }
         producto.setPrecioCompra(request.getPrecioCompra());
+        if(request.getIvaCompra() < 0){
+            throw new RuntimeException("Iva invalido");
+        }
         producto.setIvaCompra(request.getIvaCompra());
 
         //Operacion para que se actualice el precio de venta segun el valor de compra e iva ingresados
-        double precioVenta = request.getPrecioCompra() * (1 + request.getIvaCompra());
+        double precioVenta = request.getPrecioCompra() * (1 + request.getIvaCompra()/100);
+        precioVenta = Math.round(precioVenta * 100.0)/100.0;
         producto.setPrecioVenta(precioVenta);
 
         Producto actualizar = productoRepositorio.save(producto);

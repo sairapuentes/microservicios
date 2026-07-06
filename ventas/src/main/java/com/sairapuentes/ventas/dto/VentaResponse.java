@@ -6,17 +6,19 @@ public class VentaResponse {
     private int idProducto;
     private int cantidad;
     private double valorTotal;
+    private int idSede;
 
     public VentaResponse() {
     }
 
-    public VentaResponse(int idVenta, int idCliente, int idCiudad, int idProducto, int cantidad, double valorTotal) {
+    public VentaResponse(int idVenta, int idCliente, int idCiudad, int idProducto, int cantidad, double valorTotal, int idSede) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
         this.idCiudad = idCiudad;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
         this.valorTotal = valorTotal;
+        this.idSede = idSede;
     }
 
     public int getIdVenta() {
@@ -65,5 +67,13 @@ public class VentaResponse {
 
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public int getIdSede() {
+        return idSede;
+    }
+
+    public void setIdSede(int idSede) {
+        this.idSede = idSede;
     }
 }

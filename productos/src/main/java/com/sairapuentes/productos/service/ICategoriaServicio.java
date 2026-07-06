@@ -10,5 +10,6 @@ public interface ICategoriaServicio {
     List<CategoriaResponse> findAll();
     CategoriaResponse findById(int id);
     CategoriaResponse save(CategoriaRequest request);
+    CategoriaResponse update(int id, CategoriaRequest request);
     void eliminar(int id);
 }

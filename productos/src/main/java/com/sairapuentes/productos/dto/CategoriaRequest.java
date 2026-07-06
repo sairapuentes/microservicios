@@ -1,6 +1,9 @@
 package com.sairapuentes.productos.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CategoriaRequest {
+    @NotBlank(message="El nombre es obligatorio")
     private String nombreCategoria;
 
     public CategoriaRequest() {

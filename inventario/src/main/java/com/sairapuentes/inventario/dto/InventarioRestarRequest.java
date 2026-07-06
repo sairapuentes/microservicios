@@ -1,20 +1,14 @@
 package com.sairapuentes.inventario.dto;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
-
-public class InventarioRequest {
+public class InventarioRestarRequest {
     private int idProducto;
     private int idSede;
-    @PositiveOrZero
     private int cantidad;
 
-    public InventarioRequest(){
-
+    public InventarioRestarRequest() {
     }
 
-    public InventarioRequest(int idProducto,int idSede,int cantidad) {
+    public InventarioRestarRequest(int idProducto,int idSede,int cantidad) {
         this.idProducto = idProducto;
         this.idSede = idSede;
         this.cantidad = cantidad;

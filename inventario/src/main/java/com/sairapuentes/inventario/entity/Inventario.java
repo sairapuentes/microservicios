@@ -3,7 +3,9 @@ package com.sairapuentes.inventario.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name ="inventario")
+@Table(name ="inventario", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"ID_producto", "ID_sede"})
+})
 public class Inventario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

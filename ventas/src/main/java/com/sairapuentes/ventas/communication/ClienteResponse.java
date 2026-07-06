@@ -1,26 +1,18 @@
-package com.sairapuentes.clientes.entity;
+package com.sairapuentes.ventas.communication;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name ="cliente")
-public class Clientes {
-
-    @Id
-    @Column(name="ID_cliente")
+public class ClienteResponse {
     private int idCliente;
-    @Column(name="nombre-cliente", nullable = false,length=200)
     private String nombreCliente;
-    @Column(name="telefono-cliente",length=20)
     private String telefonoCliente;
-    @Column(name="email-cliente")
     private String emailCliente;
 
-    public Clientes() {
+    public ClienteResponse() {
     }
-
-    public Clientes(int idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
+    public ClienteResponse(int idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
         this.idCliente = idCliente;
+        this.nombreCliente = nombreCliente;
+        this.telefonoCliente = telefonoCliente;
+        this.emailCliente = emailCliente;
     }
 
     public int getIdCliente() {

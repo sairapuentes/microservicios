@@ -3,6 +3,7 @@ package com.sairapuentes.productos.controller;
 import com.sairapuentes.productos.dto.ProductoRequest;
 import com.sairapuentes.productos.dto.ProductoResponse;
 import com.sairapuentes.productos.service.IProductoServicio;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class ProductoControlador {
         return ResponseEntity.ok(productoServicio.findAll());
     }
     @PostMapping("/crear")
-    public ResponseEntity<ProductoResponse> crear(@RequestBody ProductoRequest request){
+    public ResponseEntity<ProductoResponse> crear(@Valid @RequestBody ProductoRequest request){
         ProductoResponse response = productoServicio.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -33,6 +34,11 @@ public class ProductoControlador {
     public ResponseEntity<List<ProductoResponse>> findByCategoria(@PathVariable Integer idCategoria){
         List<ProductoResponse> productoCategoriaList = productoServicio.findByIdCategoria(idCategoria);
         return ResponseEntity.ok(productoCategoriaList);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductoResponse> findById(@PathVariable Integer id){
+        ProductoResponse response = productoServicio.findById(id);
+        return ResponseEntity.ok(response);
     }
     @PutMapping("/{id}")
     public ResponseEntity<ProductoResponse> actualizar(
@@ -46,7 +52,5 @@ public class ProductoControlador {
         productoServicio.eliminar(id);
         return ResponseEntity.ok("Producto eliminado correctamente");
     }
-
-
 
 }
