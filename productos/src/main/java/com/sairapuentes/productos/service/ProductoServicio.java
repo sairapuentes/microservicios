@@ -1,8 +1,10 @@
 package com.sairapuentes.productos.service;
 
 import com.sairapuentes.productos.dto.ProductoRequest;
+import com.sairapuentes.productos.entity.Categoria;
 import com.sairapuentes.productos.entity.Producto;
 import com.sairapuentes.productos.dto.ProductoResponse;
+import com.sairapuentes.productos.repository.ICategoriaRepositorio;
 import com.sairapuentes.productos.repository.IProductoRepositorio;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,12 @@ import java.util.stream.Collectors;
 public class ProductoServicio implements IProductoServicio {
 
     private final IProductoRepositorio productoRepositorio;
+    private final ICategoriaRepositorio categoriaRepositorio;
 
 
-    public ProductoServicio(IProductoRepositorio productoRepositorio){
+    public ProductoServicio(IProductoRepositorio productoRepositorio, ICategoriaRepositorio categoriaRepositorio){
         this.productoRepositorio = productoRepositorio;
+        this.categoriaRepositorio = categoriaRepositorio;
     }
     @Override
     public List<ProductoResponse> findAll() {
@@ -37,7 +41,7 @@ public class ProductoServicio implements IProductoServicio {
 
     @Override
     public List<ProductoResponse> findByIdCategoria(int idCategoria) {
-        return productoRepositorio.findByIdCategoria(idCategoria)
+        return productoRepositorio.findByCategoria_IdCategoria(idCategoria)
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -46,14 +50,19 @@ public class ProductoServicio implements IProductoServicio {
     @Override
     public ProductoResponse save(ProductoRequest request) {
 
+        Categoria categoria = categoriaRepositorio
+                .findById(request.getIdCategoria())
+                .orElseThrow(()-> new RuntimeException("Categoria no encontrada"));
+
         Producto producto = new Producto();
-        producto.setIdCategoria(request.getIdCategoria());
+        producto.setCategoria(categoria);
         producto.setNombreProducto(request.getNombreProducto());
         producto.setPrecioCompra(request.getPrecioCompra());
         producto.setIvaCompra(request.getIvaCompra());
 
         //Operacion para que se actualice el precio de venta segun el valor de compra e iva ingresados
-        double precioVenta = request.getPrecioCompra() * (1 + request.getIvaCompra());
+        double precioVenta = request.getPrecioCompra() * (1 + request.getIvaCompra()/100);
+        precioVenta = Math.round(precioVenta * 100.0)/100.0;
         producto.setPrecioVenta(precioVenta);
 
         Producto guardar = productoRepositorio.save(producto);
@@ -62,15 +71,26 @@ public class ProductoServicio implements IProductoServicio {
 
     @Override
     public ProductoResponse update(int id, ProductoRequest request){
+        Categoria categoria = categoriaRepositorio
+                .findById(request.getIdCategoria())
+                .orElseThrow(()-> new RuntimeException("Categoria no encontrada"));
+
         Producto producto = productoRepositorio.findById(id)
                 .orElseThrow(() -> new RuntimeException("El producto no fue encontrado"));
-        producto.setIdCategoria(request.getIdCategoria());
+        producto.setCategoria(categoria);
         producto.setNombreProducto(request.getNombreProducto());
+        if(request.getPrecioCompra() <= 0){
+            throw new RuntimeException("Precio invalido");
+        }
         producto.setPrecioCompra(request.getPrecioCompra());
+        if(request.getIvaCompra() < 0){
+            throw new RuntimeException("Iva invalido");
+        }
         producto.setIvaCompra(request.getIvaCompra());
 
         //Operacion para que se actualice el precio de venta segun el valor de compra e iva ingresados
-        double precioVenta = request.getPrecioCompra() * (1 + request.getIvaCompra());
+        double precioVenta = request.getPrecioCompra() * (1 + request.getIvaCompra()/100);
+        precioVenta = Math.round(precioVenta * 100.0)/100.0;
         producto.setPrecioVenta(precioVenta);
 
         Producto actualizar = productoRepositorio.save(producto);
@@ -78,12 +98,15 @@ public class ProductoServicio implements IProductoServicio {
     }
     @Override
     public void eliminar(int id) {
-        productoRepositorio.deleteById(id);
+        Producto producto = productoRepositorio.findById(id)
+                        .orElseThrow(()-> new RuntimeException("Producto no encontrado"));
+        productoRepositorio.delete(producto);
     }
 
     private ProductoResponse mapToResponse (Producto producto){
         return new ProductoResponse(
                 producto.getIdProducto(),
+                producto.getCategoria().getNombreCategoria(),
                 producto.getNombreProducto(),
                 producto.getPrecioVenta(),
                 producto.getPrecioCompra(),

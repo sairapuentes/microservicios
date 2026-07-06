@@ -1,0 +1,17 @@
+target
+.idea
+.git
+.gitignore
+.mvn
+*.iml
+*.log
+
+*/target
+*/.idea
+*/logs
+
+node_modules
+
+Dockerfile
+docker-compose.yml
+README.md

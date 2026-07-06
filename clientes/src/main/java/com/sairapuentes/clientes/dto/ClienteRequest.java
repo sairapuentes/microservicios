@@ -1,14 +1,20 @@
 package com.sairapuentes.clientes.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class ClienteRequest {
     private int idCliente;
+    @NotBlank(message = "El monbre es obligatorio")
     private String nombreCliente;
-    private int telefonoCliente;
+    @NotBlank(message = "El telefono de contacto es obligatorio")
+    private String telefonoCliente;
+    @Email(message = "Debe ser un email valido")
     private String emailCliente;
     public ClienteRequest(ClienteRequest request) {
     }
 
-    public ClienteRequest(int idCliente, String nombreCliente, int telefonoCliente, String emailCliente) {
+    public ClienteRequest(int idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.telefonoCliente = telefonoCliente;
@@ -31,11 +37,11 @@ public class ClienteRequest {
         this.nombreCliente = nombreCliente;
     }
 
-    public int getTelefonoCliente() {
+    public String getTelefonoCliente() {
         return telefonoCliente;
     }
 
-    public void setTelefonoCliente(int telefonoCliente) {
+    public void setTelefonoCliente(String telefonoCliente) {
         this.telefonoCliente = telefonoCliente;
     }
 

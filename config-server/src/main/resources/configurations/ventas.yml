@@ -6,7 +6,7 @@ spring:
     name: ventas
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/supermercado
+    url: jdbc:mysql://mysql:3306/db_ventas
     username: user
     password: user123
   jpa:

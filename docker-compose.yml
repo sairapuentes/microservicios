@@ -6,7 +6,6 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: supermercado
       MYSQL_USER: user
       MYSQL_PASSWORD: user123
     ports:
@@ -15,6 +14,7 @@ services:
       - micro-net
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot" ]
       interval: 10s
@@ -23,7 +23,9 @@ services:
 
   # CONFIG SERVER
   config-server:
-    build: ./config-server
+    build:
+      context: .
+      dockerfile: config-server/Dockerfile
     container_name: config-server
     ports:
       - "8888:8888"
@@ -37,7 +39,9 @@ services:
 
   # EUREKA
   eureka:
-    build: ./eureka
+    build:
+      context: .
+      dockerfile: eureka/Dockerfile
     container_name: eureka
     ports:
       - "8761:8761"
@@ -49,7 +53,9 @@ services:
 
   # GATEAWAY
   gateaway:
-    build: ./gateaway
+    build:
+      context: .
+      dockerfile: gateaway/Dockerfile
     container_name: gateaway
     ports:
       - "8090:8090"
@@ -63,7 +69,9 @@ services:
 
   # LOGIN
   login:
-    build: ./login
+    build:
+      context: .
+      dockerfile: login/Dockerfile
     container_name: login
     ports:
       - "8010:8010"
@@ -79,7 +87,9 @@ services:
 
   # PRODUCTOS
   productos:
-    build: ./productos
+    build:
+      context: .
+      dockerfile: productos/Dockerfile
     container_name: productos
     ports:
       - "8011:8011"
@@ -90,14 +100,14 @@ services:
         condition: service_healthy
       eureka:
         condition: service_started
-      ventas:
-        condition: service_started
     networks:
       - micro-net
 
   # CLIENTES
   clientes:
-    build: ./clientes
+    build:
+      context: .
+      dockerfile: clientes/Dockerfile
     container_name: clientes
     ports:
       - "8012:8012"
@@ -113,7 +123,9 @@ services:
 
   # VENTAS
   ventas:
-    build: ./ventas
+    build:
+      context: .
+      dockerfile: ventas/Dockerfile
     container_name: ventas
     ports:
       - "8013:8013"
@@ -129,10 +141,30 @@ services:
 
   # CONSOLIDADO
   consolidado:
-    build: ./consolidado
+    build:
+      context: .
+      dockerfile: consolidado/Dockerfile
     container_name: consolidado
     ports:
       - "8014:8014"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
+      eureka:
+        condition: service_started
+    networks:
+      - micro-net
+
+  # INVENTARIO
+  inventario:
+    build:
+      context: .
+      dockerfile: inventario/Dockerfile
+    container_name: inventario
+    ports:
+      - "8015:8015"
     depends_on:
       mysql:
         condition: service_healthy
