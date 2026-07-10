@@ -63,6 +63,13 @@ public class VentaServicio implements IVentaServico {
         InventarioResponse inventarioS = ventaComunicacionInventario.getInventario(
                 request.getIdProducto(),
                 request.getIdSede());
+        System.out.println("=================================");
+        System.out.println("Producto recibido: " + inventarioS.getIdProducto());
+        System.out.println("Sede recibida: " + inventarioS.getIdSede());
+        System.out.println("Cantidad recibida: " + inventarioS.getCantidad());
+        System.out.println("Cantidad solicitada: " + request.getCantidad());
+        System.out.println("=================================");
+
         if(inventarioS.getCantidad()< request.getCantidad()){
             throw new RuntimeException("No hay stock suficiente");
         }

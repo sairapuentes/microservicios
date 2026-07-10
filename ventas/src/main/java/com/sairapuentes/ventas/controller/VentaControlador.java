@@ -36,11 +36,15 @@ public class VentaControlador {
         return ResponseEntity.ok(response);
     }
 
-
     //comunicacion entre microservicios
     @GetMapping("/producto/{idProducto}")
     public ResponseEntity<List<VentaResponse>> findByIdProducto(@PathVariable Integer idProducto){
         List<VentaResponse> ventaResponseList = ventaServicio.findByIdProducto(idProducto);
         return ResponseEntity.ok(ventaResponseList);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Integer id){
+        ventaServicio.eliminar(id);
+        return ResponseEntity.ok("Venta eliminada correctamente");
     }
 }

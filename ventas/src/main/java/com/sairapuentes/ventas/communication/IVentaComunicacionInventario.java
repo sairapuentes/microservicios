@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "inventario")
 public interface IVentaComunicacionInventario {
     @GetMapping("/api/inventario/producto/{idProducto}/sede/{idSede}")
-    InventarioResponse getInventario(@PathVariable Integer idProducto, Integer idSede);
+    InventarioResponse getInventario(@PathVariable("idProducto") Integer idProducto,
+                                     @PathVariable("idSede") Integer idSede);
     @PutMapping("/api/inventario/restarStock")
     void restarStock(@RequestBody InventarioRestarRequest request);
 }

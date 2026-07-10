@@ -6,6 +6,20 @@ spring:
     name: gateaway
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+           '[/**]':
+             allowedOrigins:
+               - "http://localhost:4200"
+             allowedMethods:
+               - GET
+               - POST
+               - PUT
+               - DELETE
+               - OPTIONS
+             allowedHeaders: "*"
+             allowCredentials: true
+
       discovery:
         locator:
           enabled: false #nos ayuda a enrutar los servicios#          lower-case-service-id: true
@@ -34,6 +48,16 @@ spring:
           uri: lb://LOGIN
           predicates:
             - Path=/api/auth/**
+
+        - id: rol
+          uri: lb://LOGIN
+          predicates:
+            - Path=/api/rol/**
+
+        - id: usuario
+          uri: lb://LOGIN
+          predicates:
+            - Path=/api/usuario/**
 
         - id: consolidado
           uri: lb://CONSOLIDADO

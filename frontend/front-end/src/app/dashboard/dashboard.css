@@ -1,0 +1,23 @@
+.dashboard{
+    padding:30px;
+}
+
+.cards{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.card{
+    width:220px;
+    background:#52c498;
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.card p{
+    font-size:35px;
+    margin-top:10px;
+}

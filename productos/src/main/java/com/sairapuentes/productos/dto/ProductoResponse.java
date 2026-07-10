@@ -3,6 +3,7 @@ package com.sairapuentes.productos.dto;
 public class ProductoResponse {
 
     private int idProducto;
+    private int idCategoria;
     private String nombreCategoria;
     private String nombreProducto;
     private double precioCompra;
@@ -12,8 +13,9 @@ public class ProductoResponse {
     public ProductoResponse() {
     }
 
-    public ProductoResponse(int idProducto,String nombreCategoria, String nombreProducto, double precioVenta, double precioCompra,double ivaCompra) {
+    public ProductoResponse(int idProducto,int idCategoria, String nombreCategoria, String nombreProducto, double precioVenta, double precioCompra,double ivaCompra) {
         this.idProducto = idProducto;
+        this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
         this.nombreProducto = nombreProducto;
         this.precioVenta = precioVenta;
@@ -27,6 +29,14 @@ public class ProductoResponse {
 
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public String getNombreCategoria() {

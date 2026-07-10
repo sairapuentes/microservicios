@@ -1,0 +1,49 @@
+.contenido{
+    padding:40px;
+}
+
+.seccion{
+    margin-bottom:50px;
+}
+
+.encabezado{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+button{
+    background:#52c498;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#45a983;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+}
+
+th{
+    background:#52c498;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+hr{
+    margin:40px 0;
+}

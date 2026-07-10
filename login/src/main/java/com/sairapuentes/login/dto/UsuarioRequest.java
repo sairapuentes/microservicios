@@ -6,16 +6,20 @@ public class UsuarioRequest {
     private String nombreUsuario;
     private int cedula;
     private String correo;
-    private String contraseña;
+    private String password;
+    private int idRol;
+    private int idSede;
 
     public UsuarioRequest() {
     }
 
-    public UsuarioRequest(String nombreUsuario, int cedula, String correo, String contraseña) {
+    public UsuarioRequest(String nombreUsuario, int cedula, String correo, String password, int idRol, int idSede) {
         this.nombreUsuario = nombreUsuario;
         this.cedula = cedula;
         this.correo = correo;
-        this.contraseña = contraseña;
+        this.password = password;
+        this.idRol = idRol;
+        this.idSede = idSede;
     }
 
     public String getNombreUsuario() {
@@ -42,11 +46,27 @@ public class UsuarioRequest {
         this.correo = correo;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
+    }
+
+    public int getIdSede() {
+        return idSede;
+    }
+
+    public void setIdSede(int idSede) {
+        this.idSede = idSede;
     }
 }

@@ -106,6 +106,7 @@ public class ProductoServicio implements IProductoServicio {
     private ProductoResponse mapToResponse (Producto producto){
         return new ProductoResponse(
                 producto.getIdProducto(),
+                producto.getCategoria().getIdCategoria(),
                 producto.getCategoria().getNombreCategoria(),
                 producto.getNombreProducto(),
                 producto.getPrecioVenta(),

@@ -1,1 +1,95 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+
+    margin:0;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:#f4f6f9;
+
+}
+
+*{
+
+    box-sizing:border-box;
+
+}
+
+h1{
+
+    margin-top:0;
+
+    color:#333;
+
+}
+
+.contenido{
+
+    flex:1;
+
+    padding:35px;
+
+    overflow:auto;
+
+}
+
+button{
+
+    background:#52c498;
+
+    color:white;
+
+    border:none;
+
+    padding:10px 18px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+}
+
+button:hover{
+
+    background:#3ba67d;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:white;
+
+    margin-top:20px;
+
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+
+}
+
+th{
+
+    background:#52c498;
+
+    color:white;
+
+    padding:14px;
+
+}
+
+td{
+
+    padding:12px;
+
+    border-bottom:1px solid #ddd;
+
+}
+
+tr:hover{
+
+    background:#f5f5f5;
+
+}
