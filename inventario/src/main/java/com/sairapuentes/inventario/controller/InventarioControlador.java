@@ -38,8 +38,8 @@ public class InventarioControlador {
 
     //Comunicacion entre microservicios
     @GetMapping("/producto/{idProducto}/sede/{idSede}")
-    public ResponseEntity<InventarioResponse> buscarProducto(@PathVariable Integer idProducto){
-        return ResponseEntity.ok(inventarioServicio.findByIdProducto(idProducto));
+    public ResponseEntity<InventarioResponse> buscarProducto(@PathVariable Integer idProducto, @PathVariable Integer idSede){
+        return ResponseEntity.ok(inventarioServicio.findByIdProductoSede(idProducto, idSede));
     }
 
     @PutMapping("/{id}")

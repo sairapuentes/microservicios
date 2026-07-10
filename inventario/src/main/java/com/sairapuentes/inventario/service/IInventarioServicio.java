@@ -12,6 +12,6 @@ public interface IInventarioServicio {
     InventarioResponse save(InventarioRequest request);
     InventarioResponse update(int id, InventarioRequest request);
     void restarStock(InventarioRestarRequest request);
-    InventarioResponse findByIdProducto(Integer idProducto);
+    InventarioResponse findByIdProductoSede(Integer idProducto, Integer idSede);
     void eliminar(int id);
 }

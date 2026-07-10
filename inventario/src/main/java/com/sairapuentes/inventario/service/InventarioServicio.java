@@ -109,12 +109,12 @@ public class InventarioServicio implements IInventarioServicio {
         inventarioRepositorio.delete(invetario);
     }
     @Override
-    public InventarioResponse findByIdProducto(Integer idProducto){
+    public InventarioResponse findByIdProductoSede(Integer idProducto, Integer idSede){
         Inventario inventarioP = inventarioRepositorio
-                .findByIdProducto(idProducto)
-                .orElseThrow(()-> new RuntimeException("Producto no encontrado en inventario"));
-       return mapToResponse(inventarioP);
-   }
+                .findByIdProductoAndSede_IdSede(idProducto, idSede)
+                .orElseThrow(()-> new RuntimeException("Producto no encontrado en esa sede"));
+        return mapToResponse(inventarioP);
+    }
 
     private InventarioResponse mapToResponse(Inventario inventario){
         return new InventarioResponse(

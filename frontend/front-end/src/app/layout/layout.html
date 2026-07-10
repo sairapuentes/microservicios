@@ -1,0 +1,47 @@
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>Supermercado</h2>
+        </div>
+
+        <nav>
+
+            <a routerLink="/dashboard">Dashboard</a>
+
+            <a routerLink="/productos">Productos</a>
+
+            <a routerLink="/clientes">Clientes</a>
+
+            <a routerLink="/inventario">Inventario</a>
+
+            <a routerLink="/ventas">Ventas</a>
+
+            <div class="menu-title">
+                Administración
+            </div>
+
+            <a routerLink="/usuarios">Usuarios</a>
+
+            <a routerLink="/configuracion">Configuración</a>
+
+        </nav>
+
+        <div class="logout">
+
+            <a routerLink="/login">
+                Cerrar sesión
+            </a>
+
+        </div>
+
+    </aside>
+
+    <main class="contenido">
+
+        <router-outlet></router-outlet>
+
+    </main>
+
+</div>

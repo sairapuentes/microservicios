@@ -1,22 +1,87 @@
-<nav class="top-nav">
-  <ul>
-    <li>Inicio</li>
-    <li class="active">Productos</li>
-    <li>Clientes</li>
-  </ul>
-</nav>
+<div class="contenido">
 
-<div class="product-container">
-  <div class="product-card">
-    <div class="product-img">
-      <span class="offer-tag">OFERTA</span>
-      <img src="https://via.placeholder.com/150" alt="Producto">
+    <div class="cabecera">
+
+        <h1>Gestión de Productos</h1>
+
+        <button class="btn-nuevo" (click)="nuevoProducto()">
+            + Nuevo Producto
+        </button>
     </div>
-    <div class="product-details">
-      <h3>Producto de Ejemplo</h3>
-      <p class="price">$ 45.000</p>
-      <p class="shipping">Envío gratis</p>
-      <button class="add-cart">Agregar</button>
+
+    <div class="busqueda">
+        <input
+            type="text" placeholder="Buscar producto..." [(ngModel)]="buscar" (keyup)="buscarProducto()">
+        <button (click)="buscarProducto()">
+            Buscar
+        </button>
     </div>
-  </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Precio de venta</th>
+                <th>Iva %</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let producto of productosFiltrados">
+                <td>{{ producto.idProducto }}</td>
+                <td>{{ producto.nombreProducto }}</td>
+                <td>{{ producto.nombreCategoria }}</td>
+                <td>{{ producto.precioCompra | currency:'COP':'symbol':'1.0-0' }}</td>
+                <td>{{ producto.precioVenta | currency:'COP':'symbol':'1.0-0' }}</td>
+                <td>{{ producto.ivaCompra }}%</td>
+                <td>
+                    <button class="btn-editar" (click)="editarProducto(producto.idProducto)">editar</button>
+                    <button class="btn-eliminar" (click)="eliminarProducto(producto.idProducto)">eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="paginacion">
+        <button>Anterior</button>
+        <span>1</span>
+        <button>Siguiente</button>
+    </div>
+
+    <div class="modal-backdrop" *ngIf="mostrarModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <h2>{{tituloModal}}</h2>
+            <button class="btn-cerrar" (click)="cerrarModal()"> ✕ </button>
+        </div>
+
+        <div class="modal-body">
+            <label>Nombre</label>
+            <input type="text" [(ngModel)]="producto.nombreProducto">
+            
+            <label>Categoría</label>
+            <select [(ngModel)]="producto.idCategoria">
+                <option [ngValue]="0">Seleccione categoria</option>
+                <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">{{categoria.nombreCategoria}}</option>
+            </select>
+            
+            <label>Precio</label>
+            <input type="number" [(ngModel)]="producto.precioCompra">
+
+            <label>Iva</label>
+            <input type="number" [(ngModel)]="producto.ivaCompra">
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-guardar" (click)="guardarProducto()">Guardar</button>
+
+            <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
 </div>

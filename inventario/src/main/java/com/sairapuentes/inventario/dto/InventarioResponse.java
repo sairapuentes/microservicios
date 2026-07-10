@@ -3,18 +3,18 @@ package com.sairapuentes.inventario.dto;
 public class InventarioResponse {
     private int idInventario;
     private int idProducto;
-    private int idSede;
     private int cantidad;
+    private int idSede;
 
     public InventarioResponse(){
 
     }
 
-    public InventarioResponse(int idInventario,int idProducto ,int idSede,int cantidad) {
+    public InventarioResponse(int idInventario,int idProducto ,int cantidad,int idSede) {
         this.idInventario = idInventario;
         this.idProducto = idProducto;
-        this.idSede = idSede;
         this.cantidad = cantidad;
+        this.idSede = idSede;
     }
 
     public int getIdInventario() {
@@ -33,6 +33,13 @@ public class InventarioResponse {
         this.idProducto = idProducto;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
     public int getIdSede() {
         return idSede;
     }
@@ -41,11 +48,4 @@ public class InventarioResponse {
         this.idSede = idSede;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
 }
