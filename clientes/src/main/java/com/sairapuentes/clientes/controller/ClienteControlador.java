@@ -27,7 +27,7 @@ public class ClienteControlador {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteResponse> findById(@PathVariable Integer id){
+    public ResponseEntity<ClienteResponse> findById(@PathVariable Long id){
         ClienteResponse cliente = clienteServicio.findById(id);
         return ResponseEntity.ok(cliente);
     }
@@ -39,7 +39,7 @@ public class ClienteControlador {
                  return ResponseEntity.ok(response);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Integer id){
+    public ResponseEntity<String> eliminar(@PathVariable Long id){
         clienteServicio.eliminar(id);
         return ResponseEntity.ok("Cliente eliminado correctamente");
     }

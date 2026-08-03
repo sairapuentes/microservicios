@@ -26,7 +26,7 @@ public class ClienteServicio implements IClienteServicio{
                 .collect(Collectors.toList());
     }
     @Override
-    public ClienteResponse findById(int id) {
+    public ClienteResponse findById(long id) {
         Clientes cliente = clienteRepositorio.findById(id)
                 .orElseThrow(()->new RuntimeException("Cliente no encontrado"));
         return mapToResponse(cliente);
@@ -45,7 +45,7 @@ public class ClienteServicio implements IClienteServicio{
     }
 
     @Override
-    public ClienteResponse update(int id, ClienteRequest request) {
+    public ClienteResponse update(long id, ClienteRequest request) {
         Clientes cliente = clienteRepositorio.findById(id)
                 .orElseThrow(()->new RuntimeException("El cliente no fue encontrado"));
         cliente.setNombreCliente(request.getNombreCliente());
@@ -57,7 +57,7 @@ public class ClienteServicio implements IClienteServicio{
     }
 
     @Override
-    public void eliminar(int id) {
+    public void eliminar(long id) {
         Clientes cliente = clienteRepositorio.findById(id)
                         .orElseThrow(()-> new RuntimeException("Cliente no encontrado"));
         clienteRepositorio.delete(cliente);

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class ClienteRequest {
-    private int idCliente;
+    private long idCliente;
     @NotBlank(message = "El monbre es obligatorio")
     private String nombreCliente;
     @NotBlank(message = "El telefono de contacto es obligatorio")
@@ -14,18 +14,18 @@ public class ClienteRequest {
     public ClienteRequest(ClienteRequest request) {
     }
 
-    public ClienteRequest(int idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
+    public ClienteRequest(long idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.telefonoCliente = telefonoCliente;
         this.emailCliente = emailCliente;
     }
 
-    public int getIdCliente() {
+    public long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 

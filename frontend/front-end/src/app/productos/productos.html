@@ -1,9 +1,6 @@
 <div class="contenido">
-
     <div class="cabecera">
-
         <h1>Gestión de Productos</h1>
-
         <button class="btn-nuevo" (click)="nuevoProducto()">
             + Nuevo Producto
         </button>
@@ -29,9 +26,8 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-
         <tbody>
-            <tr *ngFor="let producto of productosFiltrados">
+            <tr *ngFor="let producto of productosFiltrados()">
                 <td>{{ producto.idProducto }}</td>
                 <td>{{ producto.nombreProducto }}</td>
                 <td>{{ producto.nombreCategoria }}</td>
@@ -39,8 +35,8 @@
                 <td>{{ producto.precioVenta | currency:'COP':'symbol':'1.0-0' }}</td>
                 <td>{{ producto.ivaCompra }}%</td>
                 <td>
-                    <button class="btn-editar" (click)="editarProducto(producto.idProducto)">editar</button>
-                    <button class="btn-eliminar" (click)="eliminarProducto(producto.idProducto)">eliminar</button>
+                    <button class="btn-editar" (click)="editarProducto(producto.idProducto)">✏️</button>
+                    <button class="btn-eliminar" (click)="eliminarProducto(producto.idProducto)">🗑️</button>
                 </td>
             </tr>
         </tbody>
@@ -52,7 +48,7 @@
         <button>Siguiente</button>
     </div>
 
-    <div class="modal-backdrop" *ngIf="mostrarModal">
+    <div class="modal-backdrop" *ngIf="mostrarModal()">
 
     <div class="modal">
 
@@ -63,24 +59,23 @@
 
         <div class="modal-body">
             <label>Nombre</label>
-            <input type="text" [(ngModel)]="producto.nombreProducto">
+            <input type="text" [ngModel]="producto().nombreProducto" (ngModelChange)="producto.update(p => ({...p, nombreProducto: $event}))">
             
             <label>Categoría</label>
-            <select [(ngModel)]="producto.idCategoria">
+            <select [ngModel]="producto().idCategoria" (ngModelChange)="producto.update(p => ({...p, idCategoria: $event}))">
                 <option [ngValue]="0">Seleccione categoria</option>
-                <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">{{categoria.nombreCategoria}}</option>
+                <option *ngFor="let categoria of categorias()" [ngValue]="categoria.idCategoria">{{categoria.nombreCategoria}}</option>
             </select>
             
             <label>Precio</label>
-            <input type="number" [(ngModel)]="producto.precioCompra">
+            <input type="number" [ngModel]="producto().precioCompra" (ngModelChange)="producto.update(p => ({...p, precioCompra: $event}))">
 
             <label>Iva</label>
-            <input type="number" [(ngModel)]="producto.ivaCompra">
+            <input type="number" [ngModel]="producto().ivaCompra" (ngModelChange)="producto.update(p => ({...p, ivaCompra: $event}))">
         </div>
 
         <div class="modal-footer">
             <button class="btn-guardar" (click)="guardarProducto()">Guardar</button>
-
             <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
         </div>
     </div>

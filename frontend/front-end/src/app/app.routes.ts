@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import { Login } from './login/login';
 import { Layout } from './layout/layout';
-
 import { Dashboard } from './dashboard/dashboard';
 import { Productos } from './productos/productos';
 import { Clientes } from './clientes/clientes';

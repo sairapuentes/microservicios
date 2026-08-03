@@ -8,7 +8,7 @@ public class Clientes {
 
     @Id
     @Column(name="ID_cliente")
-    private int idCliente;
+    private long idCliente;
     @Column(name="nombre-cliente", nullable = false,length=200)
     private String nombreCliente;
     @Column(name="telefono-cliente",length=20)
@@ -19,15 +19,15 @@ public class Clientes {
     public Clientes() {
     }
 
-    public Clientes(int idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
+    public Clientes(long idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
         this.idCliente = idCliente;
     }
 
-    public int getIdCliente() {
+    public long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 

@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { OnInit } from '@angular/core';
 import { ProductosRequest } from '../models/productos/productos-request';
 import { ProductosResponse } from '../models/productos/productos-response';
 import { ProductosServices } from '../services/productos/productos-services';
 import { CategoriaResponse } from '../models/categoria/categoria-response';
 import { CategoriaServices } from '../services/categoria/categoria-services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-productos',
@@ -16,20 +16,27 @@ import { CategoriaServices } from '../services/categoria/categoria-services';
 })
 export class Productos implements OnInit{
 
-  productos:ProductosResponse[]=[];
-  categorias:CategoriaResponse[]=[];
-  productosFiltrados: ProductosResponse[]=[];
+  productos = signal<ProductosResponse[]>([]);
+  categorias = signal<CategoriaResponse[]>([]);
+  productosFiltrados = signal<ProductosResponse[]>([]);
 
   idProductoEditar: number = 0;
   
-  producto:ProductosRequest={
+  producto = signal<ProductosRequest>({
     idCategoria: 0,
     nombreProducto: '',
     precioCompra: 0,
     ivaCompra: 0
-  };
   
-  constructor(private productoService:ProductosServices, private categoriaService:CategoriaServices){}
+  });
+    
+
+  buscar = '';
+  mostrarModal = signal(false);
+  esActualizar = false;
+  tituloModal = 'Nuevo Producto'
+  
+  constructor(private productoService:ProductosServices, private categoriaService:CategoriaServices, private toastr: ToastrService){}
 
   ngOnInit(): void {
     this.listarProductos();
@@ -39,8 +46,8 @@ export class Productos implements OnInit{
   listarProductos(){
     this.productoService.listar().subscribe({
       next:(data)=>{
-        this.productos=[...data]; //[...] crea una copia y evita problemas de deteccion de cambios
-        this.productosFiltrados = [...data];
+        this.productos.set(data); //notificar cambios
+        this.productosFiltrados.set(data);
       },
       error:(err)=>{
         console.error(err);
@@ -50,25 +57,21 @@ export class Productos implements OnInit{
 
   listarCategorias(){
     this.categoriaService.listar().subscribe({
-      next:(data)=>{
-        this.categorias=data;
-      },
-      error:(err)=>{
-        console.error(err);
-      }
+      next:(data)=>this.categorias.set(data),
+      error:(err)=>console.error(err)
     });
   }
 
   crearProducto(){
-    this.productoService.crear(this.producto).subscribe({
+    this.productoService.crear(this.producto()).subscribe({
         next:(respuesta)=>{
             this.cerrarModal();
             this.listarProductos();
-            console.log("Producto registrado correctamente");
+            this.toastr.success("Producto registrado correctamente", "Éxito");
         },
         error:(err)=>{
             console.error(err);
-            alert("No fue posible registrar el producto");
+            this.toastr.error("No fue posible registrar el producto", "Error");
         }
     });
   }
@@ -76,38 +79,30 @@ export class Productos implements OnInit{
   actualizarProducto(){
     this.productoService.actualizar(
         this.idProductoEditar,
-        this.producto
+        this.producto()
     ).subscribe({
         next:(respuesta)=>{
             this.cerrarModal();
             this.listarProductos();
-            console.log("Producto actualizado correctamente");
+            this.toastr.success("Producto actualizado correctamente", "Éxito");
         },
         error:(err)=>{
             console.error(err);
-            alert("No fue posible actualizar");
+            this.toastr.error("No fue posible actualizar", "Error");
         }
     });
   }
 
-  buscar = '';
-  mostrarModal = false;
-  esActualizar = false;
-  tituloModal = 'Nuevo Producto'
-
   nuevoProducto() {
     this.esActualizar = false;
     this.tituloModal = 'Nuevo Producto';
-
-    this.producto= {
+    this.producto.set({
       idCategoria: 0,
       nombreProducto: '',
       precioCompra: 0,
       ivaCompra: 0
-    } as ProductosRequest;
-    
-
-    this.mostrarModal = true;
+    });
+    this.mostrarModal.set(true);
   }
 
   editarProducto(id: number) {
@@ -116,13 +111,13 @@ export class Productos implements OnInit{
     this.tituloModal = 'Editar Producto';
     this.productoService.buscarPorId(id).subscribe({
       next:(respuesta)=>{
-        this.producto={
+        this.producto.set({
           idCategoria: respuesta.idCategoria,
           nombreProducto:respuesta.nombreProducto,
           precioCompra:respuesta.precioCompra,
           ivaCompra:respuesta.ivaCompra
-        };
-        this.mostrarModal = true;
+        });
+        this.mostrarModal.set(true);
       },
       error:(err)=>{
         console.error(err);
@@ -132,20 +127,20 @@ export class Productos implements OnInit{
   }
 
   cerrarModal(){
-    this.mostrarModal=false;
-    this.producto= {
+    this.mostrarModal.set(false);
+    this.producto.set({
       idCategoria: 0,
       nombreProducto: '',
       precioCompra: 0,
       ivaCompra: 0
-    };
+    });
     this.esActualizar = false;
     this.idProductoEditar = 0;
   }
 
   guardarProducto(){
-    if(this.producto.idCategoria==0){
-      alert("Debe seleccionar una categoria");
+    if(this.producto().idCategoria==0){
+      this.toastr.warning("Debe seleccionar una categoria", "Recuerde");
       return;
     }
     if(this.esActualizar){
@@ -157,19 +152,17 @@ export class Productos implements OnInit{
 
   eliminarProducto(id: number) {
 
-    const confirmar = confirm('¿Desea eliminar este producto?');
-
-    if (!confirm("¿Desea eliminar el producto?")) {
+    if (!confirm('¿Desea eliminar este producto?')) {
       return;
     }
     this.productoService.eliminar(id).subscribe({
       next:()=>{
-        alert("Producto eliminado correctamente");
+        this.toastr.success("Producto eliminado correctamente", "Éxito");
         this.listarProductos();
       },
       error:(err)=>{
         console.error(err);
-        alert("No fue posile eliminar el producto");
+        this.toastr.error("No fue posile eliminar el producto", "Error");
       }
     });
 
@@ -177,9 +170,11 @@ export class Productos implements OnInit{
 
   buscarProducto() {
     const texto = this.buscar.toLowerCase();
-    this.productosFiltrados = this.productos.filter(producto =>
+    this.productosFiltrados.set(
+      this.productos().filter(producto =>
       producto.nombreProducto.toLowerCase().includes(texto) ||
       producto.nombreCategoria.toLowerCase().includes(texto)
+      )
     );
   }
 }

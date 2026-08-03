@@ -121,7 +121,8 @@ public class InventarioServicio implements IInventarioServicio {
                 inventario.getIdInventario(),
                 inventario.getIdProducto(),
                 inventario.getCantidad(),
-                inventario.getSede().getIdSede()
+                inventario.getSede().getIdSede(),
+                inventario.getSede().getNombreSede()
         );
     }
 
