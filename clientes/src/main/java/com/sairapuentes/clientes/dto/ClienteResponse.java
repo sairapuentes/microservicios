@@ -1,7 +1,7 @@
 package com.sairapuentes.clientes.dto;
 
 public class ClienteResponse {
-    private int idCliente;
+    private long idCliente;
     private String nombreCliente;
     private String telefonoCliente;
     private String emailCliente;
@@ -9,18 +9,18 @@ public class ClienteResponse {
     public ClienteResponse() {
     }
 
-    public ClienteResponse(int idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
+    public ClienteResponse(long idCliente, String nombreCliente, String telefonoCliente, String emailCliente) {
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.telefonoCliente = telefonoCliente;
         this.emailCliente = emailCliente;
     }
 
-    public int getIdCliente() {
+    public long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 

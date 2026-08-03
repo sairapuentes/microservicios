@@ -1,21 +1,66 @@
 <div class="contenido">
-    <h1>Gestión de Clientes</h1>
+    <div class="cabecera">
+        <h1>Gestión de Clientes</h1>
+        <button class="btn-nuevo" (click)="nuevoCliente()">+ Nuevo Cliente</button>
+    </div>
+    <div class="busqueda">
+        <input type="text" placeholder="Buscar cliente..." [(ngModel)]="buscar" (keyup)="buscarCliente()">
+        <button (click)="buscarCliente()">Buscar</button>
+    </div>
     
-    <button>+ Nuevo Cliente</button>
     <table>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Acciones</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Saira Puentes</td>
-            <td>saira@gmail.com</td>
-            <td>3001234567</td>
-            <td>✏️ 🗑️</td>
-        </tr>
+        <thead>
+            <tr>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cliente of clientesFiltrados()">
+                <td>{{cliente.idCliente}}</td>
+                <td>{{cliente.nombreCliente}}</td>
+                <td>{{cliente.telefonoCliente}}</td>
+                <td>{{cliente.emailCliente}}</td>
+                <td>
+                    <button class="btn-editar" (click)="editarCliente(cliente.idCliente)">✏️</button>
+                    <button class="btn-eliminar" (click)="eliminarCliente(cliente.idCliente)">🗑️</button>
+                </td>
+            </tr>
+        </tbody>
     </table>
+    <div class="paginacion">
+        <button>Anterior</button>
+        <span>1</span>
+        <button>Siguiente</button>
+    </div>
+
+    <div class="modal-backdrop" *ngIf="mostrarModal()">
+    
+    <div class="modal">
+        <div class="modal-header">
+            <h2>{{tituloModal}}</h2>
+            <button class="btn-cerrar" (click)="cerrarModal()"> X  </button>
+        </div>
+        <div class="modal-body">
+
+            <label>Cedula</label>
+            <input type="number" [ngModel]="cliente().idCliente" (ngModelChange)="cliente.update(c => ({...c, idCliente: $event}))">
+            
+            <label>Nombre</label>
+            <input type="text" [ngModel]="cliente().nombreCliente" (ngModelChange)="cliente.update(c => ({...c, nombreCliente: $event}))">
+
+            <label>Telefono</label>
+            <input type="text" [ngModel]="cliente().telefonoCliente" (ngModelChange)="cliente.update(c => ({...c, telefonoCliente: $event}))">
+
+            <label>Correo Electronico</label>
+            <input type="text" [ngModel]="cliente().emailCliente" (ngModelChange)="cliente.update(c => ({...c, emailCliente: $event}))">
+        </div>
+        <div class="modal-footer">
+            <button class="btn-guardar" (click)="guardarCliente()">Guardar</button>
+            <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
 </div>

@@ -1,19 +1,157 @@
 <div class="contenido">
-    <h1>Inventario</h1>
-    <button>+ Nuevo Registro</button>
+
+    <!-- CABECERA -->
+    <div class="cabecera">
+        <div>
+            <h1>Gestión de Inventario</h1>
+            <p>Administra el stock disponible por producto y sede.</p>
+        </div>
+        <div class="acciones-cabecera">
+            <button class="btn-restar" (click)="abrirModalRestarStock()">
+                − Restar Stock
+            </button>
+            <button class="btn-nuevo" (click)="nuevoInventario()">
+                + Nuevo Registro
+            </button>
+        </div>
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="busqueda">
+        <input type="text" placeholder="Buscar por producto o sede..." [(ngModel)]="buscar" (keyup)="buscarInventario()">
+        <button (click)="buscarInventario()">
+            Buscar
+        </button>
+    </div>
+
+    <!-- TABLA -->
     <table>
-        <tr>
-            <th>Producto</th>
-            <th>Sede</th>
-            <th>Stock</th>
-            <th>Acciones</th>
-        </tr>
-        <tr>
-            <td>Arroz Diana</td>
-            <td>Bogotá</td>
-            <td>120</td>
-            <td>✏️ 🗑️</td>
-        </tr>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Sede</th>
+                <th>Stock disponible</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let inventario of inventarioFiltrados()">
+                <td>{{ inventario.idInventario }}</td>
+                <td>{{ obtenerNombreProducto(inventario.idProducto) }}</td>
+                <td>{{ inventario.nombreSede }}</td>
+                <td>
+                    <span
+                        [class.stock-bajo]="inventario.cantidad <= 10"
+                        [class.stock-normal]="inventario.cantidad > 10">
+                        {{ inventario.cantidad }}
+                    </span>
+                </td>
+                <td>
+                    <button class="btn-editar" (click)="editarInventario(inventario.idInventario)">
+                        ✏️
+                    </button>
+                    <button class="btn-eliminar" (click)="eliminarInventario(inventario.idInventario)">
+                        🗑️
+                    </button>
+                </td>
+            </tr>
+
+            <!-- CUANDO NO HAY RESULTADOS -->
+
+            <tr *ngIf="inventarioFiltrados().length === 0">
+                <td colspan="5" class="sin-resultados">
+                    No se encontraron registros de inventario.
+                </td>
+            </tr>
+        </tbody>
     </table>
 
+    <!-- PAGINACIÓN -->
+
+    <div class="paginacion">
+        <button>Anterior</button>
+        <span>1</span>
+        <button>Siguiente</button>
+    </div>
+
+    <!-- MODAL NUEVO / EDITAR INVENTARIO -->
+
+    <div class="modal-backdrop" *ngIf="mostrarModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>
+                    {{ tituloModal }}
+                </h2>
+                <button class="btn-cerrar" (click)="cerrarModal()"> ✕ </button>
+            </div>
+
+            <div class="modal-body">
+                <label>Producto</label>
+                <select type="number" [ngModel]="inventario().idProducto" (ngModelChange)="inventario.update(i => ({...i, idProducto: $event}))">
+                    <option [ngValue]="0">Seleccione un producto</option>
+                    <option *ngFor="let producto of productos()" [ngValue]="producto.idProducto">{{producto.nombreProducto}}</option>
+                </select>
+
+                <label>Sede</label>
+                <select type="number" [ngModel]="inventario().idSede"
+                    (ngModelChange)="inventario.update(i => ({...i, idSede: $event}))">
+                    <option [ngValue]="0">Seleccione una sede</option>
+                    <option *ngFor="let sede of sedes()" [ngValue]="sede.idSede">{{sede.nombreSede}}</option> 
+                </select>
+
+                <label>Cantidad</label>
+                <input type="number" min="1" [ngModel]="inventario().cantidad"
+                    (ngModelChange)="inventario.update(i => ({...i, cantidad: $event}))">
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-guardar" (click)="guardarInventario()"> Guardar </button>
+                <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL RESTAR STOCK -->
+
+    <div class="modal-backdrop" *ngIf="mostrarRestar()">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Restar Stock</h2>
+                <button class="btn-cerrar" (click)="cerrarModalRestarStock()">
+                    ✕
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <label>Producto</label>
+                <select type="number" [ngModel]="restarStock().idProducto"
+                    (ngModelChange)="restarStock.update(i => ({...i,idProducto: $event}))">
+                    <option [ngValue]="0">Seleccione un producto</option>
+                    <option *ngFor="let inventario of inventarioFiltrados()" [ngValue]="inventario.idProducto">{{obtenerNombreProducto(inventario.idProducto)}}</option>
+                </select>
+
+                <label>Sede</label>
+                <select type="number" [ngModel]="restarStock().idSede"
+                    (ngModelChange)=" restarStock.update(i => ({...i,idSede: $event}))">
+                    <option [ngValue]="0">Seleccione una sede</option>
+                    <option *ngFor="let sede of sedes()" [ngValue]="sede.idSede">{{sede.nombreSede}}</option> 
+                </select>
+
+                <label>Cantidad a restar</label>
+                <input type="number" min="1" [ngModel]="restarStock().cantidad"
+                    (ngModelChange)="restarStock.update(i => ({...i,cantidad: $event}))">
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-guardar" (click)="restarInventario()">
+                    Restar Stock
+                </button>
+                <button class="btn-cancelar" (click)="cerrarModalRestarStock()">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
