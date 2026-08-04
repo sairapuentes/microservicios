@@ -5,23 +5,6 @@
     margin-bottom:25px;
 }
 
-.busqueda{
-    display:flex;
-    gap:15px;
-    margin-bottom:20px;
-}
-
-.busqueda input{
-    width:350px;
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:6px;
-}
-
-.btn-nuevo{
-    background:#27ae60;
-}
-
 .paginacion{
     display:flex;
     justify-content:flex-end;
@@ -87,12 +70,4 @@
     font-size:18px;
     border:none;
     cursor:pointer;
-}
-
-.btn-guardar{
-    background:#52c498;
-}
-
-.btn-cancelar{
-    background:#e74c3c;
 }

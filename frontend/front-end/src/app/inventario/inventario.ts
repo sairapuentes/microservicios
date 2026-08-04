@@ -204,7 +204,7 @@ export class Inventario implements OnInit{
     this.inventarioFiltrados.set(
       this.inventarios().filter(inventario =>
       inventario.idProducto.toString().includes(texto) ||
-      inventario.idSede.toString().includes(texto)
+      inventario.nombreSede.toLowerCase().includes(texto)
       )
     );
   }

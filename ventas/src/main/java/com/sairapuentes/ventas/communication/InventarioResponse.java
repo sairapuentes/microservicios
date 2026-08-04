@@ -5,14 +5,16 @@ public class InventarioResponse {
     private int idProducto;
     private int idSede;
     private int cantidad;
+    private String nombreSede;
 
     public InventarioResponse() {
     }
-    public InventarioResponse(int idInventario,int idProducto ,int idSede,int cantidad) {
+    public InventarioResponse(int idInventario,int idProducto ,int idSede,int cantidad,String nombreSede) {
         this.idInventario = idInventario;
         this.idProducto = idProducto;
         this.idSede = idSede;
         this.cantidad = cantidad;
+        this.nombreSede = nombreSede;
     }
 
     public int getIdInventario() {
@@ -45,5 +47,13 @@ public class InventarioResponse {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getNombreSede() {
+        return nombreSede;
+    }
+
+    public void setNombreSede(String nombreSede) {
+        this.nombreSede = nombreSede;
     }
 }

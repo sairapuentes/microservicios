@@ -7,11 +7,14 @@ public class VentaResponse {
     private int cantidad;
     private double valorTotal;
     private int idSede;
+    private String nombreCliente;
+    private String nombreProducto;
+    private String nombreSede;
 
     public VentaResponse() {
     }
 
-    public VentaResponse(int idVenta, int idCliente, int idCiudad, int idProducto, int cantidad, double valorTotal, int idSede) {
+    public VentaResponse(int idVenta, int idCliente, int idCiudad, int idProducto, int cantidad, double valorTotal, int idSede, String nombreCliente, String nombreProducto, String nombreSede) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
         this.idCiudad = idCiudad;
@@ -19,6 +22,9 @@ public class VentaResponse {
         this.cantidad = cantidad;
         this.valorTotal = valorTotal;
         this.idSede = idSede;
+        this.nombreProducto = nombreProducto;
+        this.nombreSede = nombreSede;
+        this.nombreCliente = nombreCliente;
     }
 
     public int getIdVenta() {
@@ -75,5 +81,29 @@ public class VentaResponse {
 
     public void setIdSede(int idSede) {
         this.idSede = idSede;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public String getNombreSede() {
+        return nombreSede;
+    }
+
+    public void setNombreSede(String nombreSede) {
+        this.nombreSede = nombreSede;
     }
 }

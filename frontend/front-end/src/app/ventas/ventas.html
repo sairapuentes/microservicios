@@ -1,21 +1,86 @@
 <div class="contenido">
-    <h1>Ventas</h1>
-    <button>+ Nueva Venta</button>
+    <div class="cabecera">
+        <h1>Ventas</h1>
+        <button class="btn-nuevo" (click)="nuevaVenta()">
+            + Nueva Venta
+        </button>
+    </div>
+
+    <div class="busqueda">
+        <input
+            type="text" placeholder="Buscar venta..." [(ngModel)]="buscar" (keyup)="buscarVenta()">
+        <button (click)="buscarVenta()">
+            Buscar
+        </button>
+    </div>
+
     <table>
-        <tr>
-            <th>ID</th>
-            <th>Cliente</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Saira</td>
-            <td>Arroz</td>
-            <td>3</td>
-            <td>$15.600</td>
-        </tr>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let venta of ventasFiltradas()">
+                <td>{{venta.idVenta}}</td>
+                <td>{{venta.nombreCliente}}</td>
+                <td>{{venta.nombreProducto}}</td>
+                <td>{{venta.cantidad}}</td>
+                <td>{{ venta.valorTotal | currency:'COP':'symbol':'1.0-0' }}</td>
+                <td class="acciones">
+                    <button class="btn-eliminar" (click)="eliminarVenta(venta.idVenta)">🗑️</button>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
+     <div class="paginacion">
+        <button>Anterior</button>
+        <span>1</span>
+        <button>Siguiente</button>
+    </div>
+
+    <div class="modal-backdrop" *ngIf="mostrarModal()">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <h2>{{tituloModal}}</h2>
+            <button class="btn-cerrar" (click)="cerrarModal()"> ✕ </button>
+        </div>
+
+        <div class="modal-body">
+            <label>Cliente</label>
+            <select type="number" [ngModel]="venta().idCliente" (ngModelChange)="venta.update(i => ({...i, idCliente: $event}))">
+                <option [ngValue]="0">Seleccione un cliente</option>
+                <option *ngFor="let cliente of clientes()" [ngValue]="cliente.idCliente">{{cliente.nombreCliente}}</option>
+            </select>
+            
+            <label>Producto</label>
+            <select type="number" [ngModel]="venta().idProducto" (ngModelChange)="venta.update(i => ({...i, idProducto: $event}))">
+                <option [ngValue]="0">Seleccione un producto</option>
+                <option *ngFor="let producto of productos()" [ngValue]="producto.idProducto">{{producto.nombreProducto}}</option>
+            </select>
+
+            <label>Sede</label>
+            <select type="number" [ngModel]="venta().idSede" (ngModelChange)="venta.update(i => ({...i, idSede: $event}))">
+                <option [ngValue]="0">Seleccione una sede</option>
+                <option *ngFor="let sede of sedes()" [ngValue]="sede.idSede">{{sede.nombreSede}}</option>
+            </select>
+
+            <label>Cantidad</label>
+            <input type="number" min="1" [ngModel]="venta().cantidad" (ngModelChange)="venta.update(i => ({...i, cantidad: $event}))">
+            
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-guardar" (click)="guardarVenta()">Guardar</button>
+            <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
 </div>
