@@ -1,127 +1,114 @@
 <div class="contenido">
-
+    
     <h1>Configuración del Sistema</h1>
-
     <!-- ================= ROLES ================= -->
-
     <section class="seccion">
-
-        <div class="encabezado">
-
+        <div class="cabecera">
             <h2>Roles</h2>
-
-            <button>+ Nuevo Rol</button>
-
+            <button class="btn-nuevo" (click)="nuevoRol()">
+                + Nuevo Rol
+            </button>
         </div>
-
         <table>
-
             <thead>
-
                 <tr>
                     <th>ID</th>
                     <th>Rol</th>
-                    <th>Descripción</th>
                     <th>Acciones</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
-                <tr>
-                    <td>1</td>
-                    <td>SUPER_ADMIN</td>
-                    <td>Control total del sistema</td>
-                    <td>✏️ 🗑️</td>
+                <tr *ngFor="let rol of rolesFiltrados()">
+                    <td>{{ rol.idRol }}</td>
+                    <td>{{ rol.nombreRol }}</td>
+                    <td class="acciones">
+                        <button class="btn-editar" (click)="editarRol(rol.idRol)">✏️</button>
+                        <button class="btn-eliminar" (click)="eliminarRol(rol.idRol)">🗑️</button>
+                    </td>
                 </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>ADMINISTRADOR</td>
-                    <td>Administrador de sede</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>CAJERO</td>
-                    <td>Registro de ventas</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
-
             </tbody>
-
         </table>
-
     </section>
+
+     <!-- ================= MODAL ROL ================= -->
+    <div class="modal-backdrop" *ngIf="mostrarModalRol()">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>{{ tituloModalRol }}</h2>
+                <button class="btn-cerrar" (click)="cerrarModalRol()">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <label>Nombre del Rol</label>
+                <input type="text" placeholder="Ej: Administrador"[ngModel]="rol().nombreRol" (ngModelChange)="rol.update(r => ({ ...r, nombreRol: $event }))">
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn-guardar" (click)="guardarRol()">Guardar</button>
+                <button class="btn-cancelar" (click)="cerrarModalRol()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
 
     <hr>
 
     <!-- ================= SEDES ================= -->
 
     <section class="seccion">
-
-        <div class="encabezado">
-
+        <div class="cabecera">
             <h2>Sedes</h2>
-
-            <button>+ Nueva Sede</button>
-
+            <button class="btn-nuevo" (click)="nuevaSede()">
+                + Nueva Sede
+            </button>
         </div>
-
         <table>
-
             <thead>
-
                 <tr>
                     <th>ID</th>
                     <th>Sede</th>
-                    <th>Ciudad</th>
                     <th>Dirección</th>
+                    <th>Ciudad</th>
                     <th>Acciones</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
-                <tr>
-                    <td>1</td>
-                    <td>Bogotá</td>
-                    <td>Bogotá D.C.</td>
-                    <td>Cra 30 #45-12</td>
-                    <td>✏️ 🗑️</td>
+                <tr *ngFor="let sede of sedesFiltradas()">
+                    <td>{{ sede.idSede }}</td>
+                    <td>{{ sede.nombreSede }}</td>
+                    <td>{{ sede.direccion }}</td>
+                    <td>{{ sede.ciudad }}</td>
+                    <td>
+                        <button class="btn-editar" (click)="editarSede(sede.idSede)">✏️</button>
+                        <button class="btn-eliminar" (click)="eliminarSede(sede.idSede)">🗑️</button>
+                    </td>
                 </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>Medellín</td>
-                    <td>Medellín</td>
-                    <td>Calle 10 #20-15</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Cali</td>
-                    <td>Cali</td>
-                    <td>Av. 6 Norte #18-20</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
-
-                <tr>
-                    <td>4</td>
-                    <td>Ibagué</td>
-                    <td>Ibagué</td>
-                    <td>Calle 60 #5-40</td>
-                    <td>✏️ 🗑️</td>
-                </tr>
-
             </tbody>
-
         </table>
-
     </section>
-
+    <!-- ================= MODAL SEDES ================= -->
+    
+    <div class="modal-backdrop" *ngIf="mostrarModalSede()">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>{{ tituloModalSede }}</h2>
+                <button class="btn-cerrar" (click)="cerrarModalSede()">✕</button>
+            </div>
+            <div class="modal-body">
+                <label>Nombre de la sede</label>
+                <input type="text" placeholder="Nombre de la sede" [ngModel]="sede().nombreSede" (ngModelChange)="sede.update(s => ({ ...s, nombreSede: $event }))">
+                
+                <label>Dirección</label>
+                <input type="text" placeholder="Dirección" [ngModel]="sede().direccion" (ngModelChange)="sede.update(s => ({ ...s, direccion: $event }))">
+                
+                <label>Ciudad</label>
+                <input type="text" placeholder="Ciudad" [ngModel]="sede().ciudad" (ngModelChange)="sede.update(s => ({ ...s, ciudad: $event }))">
+            </div>
+            
+            <div class="modal-footer">
+                 <button class="btn-guardar" (click)="guardarSede()">Guardar</button>
+                 <button class="btn-cancelar" (click)="cerrarModalSede()">Cancelar</button>
+            </div>
+        </div>
+    </div>
 </div>

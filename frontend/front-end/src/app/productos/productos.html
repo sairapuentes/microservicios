@@ -34,7 +34,7 @@
                 <td>{{ producto.precioCompra | currency:'COP':'symbol':'1.0-0' }}</td>
                 <td>{{ producto.precioVenta | currency:'COP':'symbol':'1.0-0' }}</td>
                 <td>{{ producto.ivaCompra }}%</td>
-                <td>
+                <td class="acciones">
                     <button class="btn-editar" (click)="editarProducto(producto.idProducto)">✏️</button>
                     <button class="btn-eliminar" (click)="eliminarProducto(producto.idProducto)">🗑️</button>
                 </td>

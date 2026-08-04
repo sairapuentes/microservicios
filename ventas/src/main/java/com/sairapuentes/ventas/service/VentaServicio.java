@@ -109,6 +109,9 @@ public class VentaServicio implements IVentaServico {
     }
 
     private VentaResponse mapToResponse(Venta venta){
+        ClienteResponse clienteResponse = ventaComunicacionClientes.getClienteById(venta.getIdCliente());
+        ProductoResponse productoResponse = ventaComunicacionProductos.getProductoById(venta.getIdProducto());
+        InventarioResponse inventarioResponse = ventaComunicacionInventario.getInventario(venta.getIdProducto(), venta.getIdSede());
         return new VentaResponse(
                 venta.getIdVenta(),
                 venta.getIdCliente(),
@@ -116,7 +119,10 @@ public class VentaServicio implements IVentaServico {
                 venta.getIdProducto(),
                 venta.getCantidad(),
                 venta.getValorTotal(),
-                venta.getIdSede()
+                venta.getIdSede(),
+                clienteResponse.getNombreCliente(),
+                productoResponse.getNombreProducto(),
+                inventarioResponse.getNombreSede()
         );
     }
 }

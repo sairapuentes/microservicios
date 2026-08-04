@@ -1,17 +1,15 @@
 <div class="contenido">
 
-    <!-- CABECERA -->
     <div class="cabecera">
         <div>
             <h1>Gestión de Inventario</h1>
-            <p>Administra el stock disponible por producto y sede.</p>
         </div>
         <div class="acciones-cabecera">
-            <button class="btn-restar" (click)="abrirModalRestarStock()">
-                − Restar Stock
-            </button>
             <button class="btn-nuevo" (click)="nuevoInventario()">
                 + Nuevo Registro
+            </button>
+            <button class="btn-restar" (click)="abrirModalRestarStock()">
+                − Restar Stock
             </button>
         </div>
     </div>
@@ -48,7 +46,7 @@
                         {{ inventario.cantidad }}
                     </span>
                 </td>
-                <td>
+                <td class="acciones">
                     <button class="btn-editar" (click)="editarInventario(inventario.idInventario)">
                         ✏️
                     </button>
