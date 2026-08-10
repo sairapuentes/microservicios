@@ -1,17 +1,19 @@
 <div class="contenido">
     <div class="cabecera">
-        <h1>Gestión de Usuarios/h1>
-        <button class="btn-nuevo" (click)="nuevoUsuario()">+ Nuevo Usuario</button>
+        <h1>Gestión de Usuarios</h1>
+        <button class="btn-nuevo" (click)="nuevoUsuario()">
+            + Nuevo Usuario
+        </button>
     </div>
     <div class="busqueda">
-        <input type="text" placeholder="Buscar Usuario..." [(ngModel)]="buscar" (keyup)="buscarUsuarios()">
-        <button (click)="buscarUsuarios()">Buscar</button>
+        <input type="text" placeholder="Buscar Usuario..." [(ngModel)]="buscar" (keyup)="buscarUsuario()">
+        <button (click)="buscarUsuario()">Buscar</button>
     </div>
     
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Cedula</th>
                 <th>Nombre</th>
                 <th>Correo</th>
                 <th>Rol</th>
@@ -20,12 +22,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let usuario of usuariosFiltrados()">
-                <td>{{usuario.cedulaUsuario}}</td>
+            <tr *ngFor="let usuario of usuarioFiltrados()">
+                <td>{{usuario.cedula}}</td>
                 <td>{{usuario.nombreUsuario}}</td>
-                <td>{{usuario.correoUsuario}}</td>
-                <td>{{usuario.rolUsuario}}</td>
-                <td>{{usuario.sedeUsuario}}</td>
+                <td>{{usuario.correo}}</td>
+                <td>{{usuario.nombreRol}}</td>
+                <td>{{usuario.idSede}}</td>
                 <td class="acciones">
                     <button class="btn-editar" (click)="editarUsuario(usuario.idUsuario)">✏️</button>
                     <button class="btn-eliminar" (click)="eliminarUsuario(usuario.idUsuario)">🗑️</button>
@@ -40,38 +42,40 @@
     </div>
 
     <div class="modal-backdrop" *ngIf="mostrarModal()">
-    
-    <div class="modal">
-        <div class="modal-header">
-            <h2>{{tituloModal}}</h2>
-            <button class="btn-cerrar" (click)="cerrarModal()"> X </button>
-        </div>
-        <div class="modal-body">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>{{tituloModal}}</h2>
+                <button class="btn-cerrar" (click)="cerrarModal()"> X </button>
+            </div>
+            <div class="modal-body">
+                <label>Cedula</label>
+                <input type="number" [ngModel]="usuario().cedula" (ngModelChange)="usuario.update(c => ({...c, cedula: $event}))">
+                
+                <label>Nombre</label>
+                <input type="text" [ngModel]="usuario().nombreUsuario" (ngModelChange)="usuario.update(c => ({...c, nombreUsuario: $event}))">
+                
+                <label>Correo Electronico</label>
+                <input type="email" [ngModel]="usuario().correo" (ngModelChange)="usuario.update(c => ({...c, correo: $event}))">
 
-            <label>Cedula</label>
-            <input type="number" [ngModel]="usuario().idUsuario" (ngModelChange)="usuario.update(c => ({...c, idUsuario: $event}))">
-            
-            <label>Nombre</label>
-            <input type="text" [ngModel]="usuario().nombreUsuario" (ngModelChange)="usuario.update(c => ({...c, nombreUsuario: $event}))">
+                <label>Contraseña</label>
+                <input type="password" [ngModel]="usuario().password" (ngModelChange)="usuario.update(c => ({...c, password: $event}))" placeholder="Ingrese la contraseña">
 
-            <label>Correo Electronico</label>
-            <input type="text" [ngModel]="usuario().correoUsuario" (ngModelChange)="usuario.update(c => ({...c, correoUsuario: $event}))">
-
-            <label>Rol</label>
-            <select type="number" [ngModel]="usuario().idRol" (ngModelChange)="usuario.update(i => ({...i, idRol: $event}))">
-                <option [ngValue]="0">Seleccione un rol</option>
-                <option *ngFor="let rol of roles()" [ngValue]="rol.idSede">{{rol.nombreRol}}</option> 
-            </select>
-
-            <label>Sede</label>
-            <select type="number" [ngModel]="usuario().idSede" (ngModelChange)="usuario.update(i => ({...i, idSede: $event}))">
-                <option [ngValue]="0">Seleccione una sede</option>
-                <option *ngFor="let sede of sedes()" [ngValue]="sede.idSede">{{sede.nombreSede}}</option> 
-            </select>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-guardar" (click)="guardarCliente()">Guardar</button>
-            <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+                <label>Rol</label>
+                <select type="number" [ngModel]="usuario().idRol" (ngModelChange)="usuario.update(i => ({...i, idRol: $event}))">
+                    <option [ngValue]="0">Seleccione un rol</option>
+                    <option *ngFor="let rol of roles()" [ngValue]="rol.idRol">{{rol.nombreRol}}</option> 
+                </select>
+                
+                <label>Sede</label>
+                <select type="number" [ngModel]="usuario().idSede" (ngModelChange)="usuario.update(i => ({...i, idSede: $event}))">
+                    <option [ngValue]="0">Seleccione una sede</option>
+                    <option *ngFor="let sede of sedes()" [ngValue]="sede.idSede">{{sede.nombreSede}}</option> 
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-guardar" (click)="guardarUsuario()">Guardar</button>
+                <button class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+            </div>
         </div>
     </div>
 </div>

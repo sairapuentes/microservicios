@@ -1,5 +1,6 @@
 export interface UsuarioResponse {
-    idUsuari: number;
+    idUsuario: number;
+    cedula: number;
     nombreUsuario: string;
     correo: string;
     nombreRol: string;

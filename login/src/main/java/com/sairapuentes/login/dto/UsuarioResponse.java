@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 
 public class UsuarioResponse {
     private int idUsuario;
+    private long cedula;
     private String nombreUsuario;
     private String correo;
     private String nombreRol;
@@ -12,8 +13,9 @@ public class UsuarioResponse {
     public UsuarioResponse() {
     }
 
-    public UsuarioResponse(int idUsuario,String nombreUsuario, String correo, String nombreRol, int idSede) {
+    public UsuarioResponse(int idUsuario, long cedula,String nombreUsuario, String correo, String nombreRol, int idSede) {
         this.idUsuario = idUsuario;
+        this.cedula = cedula;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.nombreRol = nombreRol;
@@ -26,6 +28,14 @@ public class UsuarioResponse {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public long getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(int cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombreUsuario() {
