@@ -77,6 +77,7 @@ public class UsuarioServicio implements IUsuarioServicio{
      private UsuarioResponse mapToResponse(Usuario usuario){
          return new UsuarioResponse(
                  usuario.getIdUsuario(),
+                 usuario.getCedula(),
                  usuario.getNombreUsuario(),
                  usuario.getCorreo(),
                  usuario.getRol().getNombreRol(),

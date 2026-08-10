@@ -67,8 +67,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Sede</th>
-                    <th>Dirección</th>
                     <th>Ciudad</th>
+                    <th>Dirección</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -98,11 +98,12 @@
                 <label>Nombre de la sede</label>
                 <input type="text" placeholder="Nombre de la sede" [ngModel]="sede().nombreSede" (ngModelChange)="sede.update(s => ({ ...s, nombreSede: $event }))">
                 
+                <label>Ciudad</label>
+                <input type="text" placeholder="Ciudad" [ngModel]="sede().ciudad" (ngModelChange)="sede.update(s => ({ ...s, ciudad: $event }))">
+
                 <label>Dirección</label>
                 <input type="text" placeholder="Dirección" [ngModel]="sede().direccion" (ngModelChange)="sede.update(s => ({ ...s, direccion: $event }))">
                 
-                <label>Ciudad</label>
-                <input type="text" placeholder="Ciudad" [ngModel]="sede().ciudad" (ngModelChange)="sede.update(s => ({ ...s, ciudad: $event }))">
             </div>
             
             <div class="modal-footer">
