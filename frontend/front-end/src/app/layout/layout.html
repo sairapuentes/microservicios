@@ -3,6 +3,7 @@
     <aside class="sidebar">
         <div class="logo">
             <h2>Supermercado</h2>
+            <span>{{ nombreSede() }} </span>
         </div>
         <nav>
             <a routerLink="/dashboard">Dashboard</a>
@@ -19,6 +20,10 @@
             <a [routerLink] ="admin() ? '/usuarios' : null" [class.menu-bloqueado]="!admin()" [attr.aria-disabled]="!admin()">Usuarios</a>
             <a [routerLink] ="admin() ? '/configuracion' : null" [class.menu-bloqueado]="!admin()" [attr.aria-disabled]="!admin()">Configuración</a>
         </nav>
+        <div class="usuarioSesion">
+            <strong>{{ nombreUsuario }}</strong>
+            <span>{{ rolUsuario }}</span>
+        </div>
 
         <div class="logout">
             <a (click)="cerrarSesion()">Cerrar sesión</a>
