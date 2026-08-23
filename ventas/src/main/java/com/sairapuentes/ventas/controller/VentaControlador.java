@@ -24,6 +24,11 @@ public class VentaControlador {
 
         return ResponseEntity.ok(ventaServicio.findAllBySede(idSede));
     }
+    @GetMapping("/consolidado")
+    public ResponseEntity<List<VentaResponse>> listarParaConsolidado(){
+
+        return ResponseEntity.ok(ventaServicio.findAll());
+    }
     @PostMapping("/crear")
     public ResponseEntity<VentaResponse> crear(@Valid @RequestBody VentaRequest request, @RequestHeader("X-Usuario-Sede") Integer idSede){
         VentaResponse response = ventaServicio.save(request, idSede);
