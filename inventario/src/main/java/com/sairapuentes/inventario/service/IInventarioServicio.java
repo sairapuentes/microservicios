@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IInventarioServicio {
     List<InventarioResponse> findAll();
+    List<InventarioResponse> findAllBySede(Integer idSede);
     InventarioResponse findById(int id);
     InventarioResponse save(InventarioRequest request);
     InventarioResponse update(int id, InventarioRequest request);

@@ -1,7 +1,7 @@
 <div class="contenido">
     <div class="cabecera">
         <h1>Gestión de Clientes</h1>
-        <button class="btn-nuevo" (click)="nuevoCliente()">+ Nuevo Cliente</button>
+        <button *ngIf="permisos.crearCliente()" class="btn-nuevo" (click)="nuevoCliente()">+ Nuevo Cliente</button>
     </div>
     <div class="busqueda">
         <input type="text" placeholder="Buscar cliente..." [(ngModel)]="buscar" (keyup)="buscarCliente()">
@@ -25,8 +25,8 @@
                 <td>{{cliente.telefonoCliente}}</td>
                 <td>{{cliente.emailCliente}}</td>
                 <td class="acciones">
-                    <button class="btn-editar" (click)="editarCliente(cliente.idCliente)">✏️</button>
-                    <button class="btn-eliminar" (click)="eliminarCliente(cliente.idCliente)">🗑️</button>
+                    <button *ngIf="permisos.editarCliente()" class="btn-editar" (click)="editarCliente(cliente.idCliente)">✏️</button>
+                    <button *ngIf="permisos.eliminarCliente()" class="btn-eliminar" (click)="eliminarCliente(cliente.idCliente)">🗑️</button>
                 </td>
             </tr>
         </tbody>

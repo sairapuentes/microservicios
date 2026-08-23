@@ -1,7 +1,7 @@
 <div class="contenido">
     <div class="cabecera">
         <h1>Ventas</h1>
-        <button class="btn-nuevo" (click)="nuevaVenta()">
+        <button *ngIf="permisos.crearVenta()" class="btn-nuevo" (click)="nuevaVenta()">
             + Nueva Venta
         </button>
     </div>
@@ -33,7 +33,7 @@
                 <td>{{venta.cantidad}}</td>
                 <td>{{ venta.valorTotal | currency:'COP':'symbol':'1.0-0' }}</td>
                 <td class="acciones">
-                    <button class="btn-eliminar" (click)="eliminarVenta(venta.idVenta)">🗑️</button>
+                    <button *ngIf="permisos.eliminarVenta()" class="btn-eliminar" (click)="eliminarVenta(venta.idVenta)">🗑️</button>
                 </td>
             </tr>
         </tbody>
@@ -60,22 +60,16 @@
                 <option [ngValue]="0">Seleccione un cliente</option>
                 <option *ngFor="let cliente of clientes()" [ngValue]="cliente.idCliente">{{cliente.nombreCliente}}</option>
             </select>
-            
+
             <label>Producto</label>
             <select type="number" [ngModel]="venta().idProducto" (ngModelChange)="venta.update(i => ({...i, idProducto: $event}))">
                 <option [ngValue]="0">Seleccione un producto</option>
                 <option *ngFor="let producto of productos()" [ngValue]="producto.idProducto">{{producto.nombreProducto}}</option>
             </select>
 
-            <label>Sede</label>
-            <select type="number" [ngModel]="venta().idSede" (ngModelChange)="venta.update(i => ({...i, idSede: $event}))">
-                <option [ngValue]="0">Seleccione una sede</option>
-                <option *ngFor="let sede of sedes()" [ngValue]="sede.idSede">{{sede.nombreSede}}</option>
-            </select>
-
             <label>Cantidad</label>
             <input type="number" min="1" [ngModel]="venta().cantidad" (ngModelChange)="venta.update(i => ({...i, cantidad: $event}))">
-            
+
         </div>
 
         <div class="modal-footer">

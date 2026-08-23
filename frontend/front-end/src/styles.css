@@ -136,9 +136,20 @@ tr:hover{
     background:#f5f5f5;
 }
 
-.acciones {
+/* .acciones {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
+} */
+
+.acciones{
+    text-align: center;
+    white-space: nowrap;
+}
+
+.acciones button{
+    width: 35px;
+    height: 35px;
+    margin: 0 3px;
 }

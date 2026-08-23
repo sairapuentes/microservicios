@@ -13,8 +13,6 @@ public class Venta {
     private int idVenta;
     @Column(name = "ID_cliente")
     private int idCliente;
-    @Column(name = "ID_ciudad")
-    private int idCiudad;
     @Column(name = "ID_producto")
     private int idProducto;
     @Column(name = "cantidad")
@@ -26,9 +24,8 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(int idCliente, int idCiudad, int idProducto, int cantidad, double valorTotal, int idSede) {
+    public Venta(int idCliente, int idProducto, int cantidad, double valorTotal, int idSede) {
         this.idCliente = idCliente;
-        this.idCiudad = idCiudad;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
         this.valorTotal = valorTotal;
@@ -49,14 +46,6 @@ public class Venta {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
-    }
-
-    public int getIdCiudad() {
-        return idCiudad;
-    }
-
-    public void setIdCiudad(int idCiudad) {
-        this.idCiudad = idCiudad;
     }
 
     public int getIdProducto() {

@@ -4,5 +4,4 @@ export interface VentaRequest {
     idCiudad: number;
     idProducto: number;
     cantidad: number;
-    idSede: number;
 }

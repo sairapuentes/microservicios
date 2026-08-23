@@ -5,22 +5,20 @@ import jakarta.validation.constraints.Positive;
 public class VentaRequest {
     private int idVenta;
     private int idCliente;
-    private int idCiudad;
+    private int idSede;
     private int idProducto;
     @Positive
     private int cantidad;
-    private int idSede;
 
     public VentaRequest() {
     }
 
-    public VentaRequest(int idVenta, int idCliente, int idCiudad, int idProducto, int cantidad,int idSede) {
+    public VentaRequest(int idVenta, int idCliente, int idSede, int idProducto, int cantidad) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
-        this.idCiudad = idCiudad;
+        this.idSede = idSede;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
-        this.idSede = idSede;
     }
 
     public int getIdVenta() {
@@ -39,12 +37,12 @@ public class VentaRequest {
         this.idCliente = idCliente;
     }
 
-    public int getIdCiudad() {
-        return idCiudad;
+    public int getIdSede() {
+        return idSede;
     }
 
-    public void setIdCiudad(int idCiudad) {
-        this.idCiudad = idCiudad;
+    public void setIdSede(int idSede) {
+        this.idSede = idSede;
     }
 
     public int getIdProducto() {
@@ -61,13 +59,5 @@ public class VentaRequest {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public int getIdSede() {
-        return idSede;
-    }
-
-    public void setIdSede(int idSede) {
-        this.idSede = idSede;
     }
 }

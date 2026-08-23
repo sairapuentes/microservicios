@@ -19,7 +19,8 @@ public class ProductoControlador {
     private IProductoServicio productoServicio;
 
     @GetMapping
-    public ResponseEntity<List<ProductoResponse>> listar(){
+    public ResponseEntity<List<ProductoResponse>> listar(@RequestHeader("X-Usuario-Sede") Integer idSede,
+                                                         @RequestHeader("X-Usuario-Rol") String rol){
 
         return ResponseEntity.ok(productoServicio.findAll());
     }

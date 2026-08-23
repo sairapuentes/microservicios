@@ -7,6 +7,7 @@ import { ProductosServices } from '../services/productos/productos-services';
 import { CategoriaResponse } from '../models/categoria/categoria-response';
 import { CategoriaServices } from '../services/categoria/categoria-services';
 import { ToastrService } from 'ngx-toastr';
+import { PermisosServices } from '../services/autenticacion/permisos-services';
 
 @Component({
   selector: 'app-productos',
@@ -30,17 +31,24 @@ export class Productos implements OnInit{
   
   });
     
-
+  rolUsuario= '';
+  idSedeUsuario = 0;
   buscar = '';
   mostrarModal = signal(false);
   esActualizar = false;
   tituloModal = 'Nuevo Producto'
   
-  constructor(private productoService:ProductosServices, private categoriaService:CategoriaServices, private toastr: ToastrService){}
+  constructor(private productoService:ProductosServices, private categoriaService:CategoriaServices, private toastr: ToastrService, public permisos: PermisosServices){}
 
   ngOnInit(): void {
     this.listarProductos();
     this.listarCategorias();
+    this.cargarPermisosUsuario();
+  }
+
+  cargarPermisosUsuario(): void {
+    this.rolUsuario = localStorage.getItem('rol') || '';
+    this.idSedeUsuario = Number(localStorage.getItem('idSede')) || 0;
   }
 
   listarProductos(){

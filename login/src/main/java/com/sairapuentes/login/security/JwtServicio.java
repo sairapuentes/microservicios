@@ -21,10 +21,11 @@ public class JwtServicio {
         );
     }
     public String generarToken(Usuario usuario){
+        String rol = usuario.getRol().getNombreRol().trim().toUpperCase();
         return Jwts.builder()
                 .subject(usuario.getCorreo())
                 .claim("idUsuario",usuario.getIdUsuario())
-                .claim("rol", usuario.getRol().getNombreRol())
+                .claim("rol", rol)
                 .claim("idSede", usuario.getIdSede())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
@@ -39,6 +40,15 @@ public class JwtServicio {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    public String extraerRol(String token){
+        return Jwts.parser()
+                .verifyWith(getKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("rol", String.class);
     }
 
     public boolean validarToken(String token){

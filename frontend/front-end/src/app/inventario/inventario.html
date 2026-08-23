@@ -5,10 +5,10 @@
             <h1>Gestión de Inventario</h1>
         </div>
         <div class="acciones-cabecera">
-            <button class="btn-nuevo" (click)="nuevoInventario()">
+            <button *ngIf="permisos.crearInventario()" class="btn-nuevo" (click)="nuevoInventario()">
                 + Nuevo Registro
             </button>
-            <button class="btn-restar" (click)="abrirModalRestarStock()">
+            <button *ngIf="permisos.puedeRestarStock()" class="btn-restar" (click)="abrirModalRestarStock()">
                 − Restar Stock
             </button>
         </div>
@@ -47,10 +47,10 @@
                     </span>
                 </td>
                 <td class="acciones">
-                    <button class="btn-editar" (click)="editarInventario(inventario.idInventario)">
+                    <button *ngIf="permisos.editarInventario()" class="btn-editar" (click)="editarInventario(inventario.idInventario)">
                         ✏️
                     </button>
-                    <button class="btn-eliminar" (click)="eliminarInventario(inventario.idInventario)">
+                    <button *ngIf="permisos.eliminarInventario()" class="btn-eliminar" (click)="eliminarInventario(inventario.idInventario)">
                         🗑️
                     </button>
                 </td>
@@ -93,9 +93,9 @@
                 </select>
 
                 <label>Sede</label>
-                <select type="number" [ngModel]="inventario().idSede"
+                <select [disabled] = "rolUsuario === 'BODEGA'" type="number" [ngModel]="inventario().idSede"
                     (ngModelChange)="inventario.update(i => ({...i, idSede: $event}))">
-                    <option [ngValue]="0">Seleccione una sede</option>
+                    <option *ngIf="rolUsuario !== 'BODEGA'" [ngValue]="0">Seleccione una sede</option>
                     <option *ngFor="let sede of sedes()" [ngValue]="sede.idSede">{{sede.nombreSede}}</option> 
                 </select>
 
@@ -131,9 +131,9 @@
                 </select>
 
                 <label>Sede</label>
-                <select type="number" [ngModel]="restarStock().idSede"
+                <select type="number" [disabled] = "rolUsuario === 'BODEGA'" [ngModel]="restarStock().idSede"
                     (ngModelChange)=" restarStock.update(i => ({...i,idSede: $event}))">
-                    <option [ngValue]="0">Seleccione una sede</option>
+                    <option *ngIf="rolUsuario !== 'BODEGA'" [ngValue]="0">Seleccione una sede</option>
                     <option *ngFor="let sede of sedes()" [ngValue]="sede.idSede">{{sede.nombreSede}}</option> 
                 </select>
 
