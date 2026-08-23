@@ -1,0 +1,74 @@
+<div class="consolidado">
+
+  <h1>Consolidado</h1>
+  <p></p>
+
+  <!-- RESUMEN GENERAL -->
+  <div class="cards">
+
+    <div class="card">
+      <h3>Total ventas</h3>
+      <p>{{ consolidado?.totalVentas }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Total unidades</h3>
+      <p>{{ consolidado?.totalUnidades }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Total vendido</h3>
+      <p>${{ consolidado?.totalVendido | number:'1.0-0'}}</p>
+    </div>
+
+  </div>
+
+  <!-- POR SEDE -->
+  <div class="section">
+    <h2>Consolidado por sede</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Sede</th>
+          <th>Total ventas</th>
+          <th>Total unidades</th>
+          <th>Total vendido</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (sede of consolidadoSedes; track sede.idSede) {
+          <tr>
+            <td>{{ sede.nombreSede }}</td>
+            <td>{{ sede.totalVentas }}</td>
+            <td>{{ sede.totalUnidades }}</td>
+            <td>${{ sede.totalVendido | number:'1.0-0'}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- POR PRODUCTO -->
+  <div class="section">
+    <h2>Consolidado por producto</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Total unidades</th>
+          <th>Total vendido</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (producto of consolidadoProductos; track producto.idProducto) {
+          <tr>
+            <td>{{ producto.nombreProducto }}</td>
+            <td>{{ producto.totalUnidades }}</td>
+            <td>${{ producto.totalVendido | number:'1.0-0'}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

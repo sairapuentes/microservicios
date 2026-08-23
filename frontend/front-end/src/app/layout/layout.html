@@ -10,7 +10,7 @@
             <a [routerLink] ="usuarios() ? '/clientes' : null" [class.menu-bloqueado]="!usuarios()" [attr.aria-disabled]="!usuarios()">Clientes</a>
             <a routerLink="/inventario">Inventario</a>
             <a [routerLink] ="usuarios() ? '/ventas' : null" [class.menu-bloqueado]="!usuarios()" [attr.aria-disabled]="!usuarios()">Ventas</a>
-            <a [routerLink] ="admin() ? '/consolidado' : null" [class.menu-bloqueado]="!admin()" [attr.aria-disabled]="!admin()">Consolidado</a>
+            <a [routerLink] ="usuarios() ? '/consolidado' : null" [class.menu-bloqueado]="!usuarios()" [attr.aria-disabled]="!usuarios()">Consolidado</a>
 
             <div class="menu-title">
                 Administración

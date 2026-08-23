@@ -9,6 +9,7 @@ import { Ventas } from './ventas/ventas';
 import { Usuarios } from './usuarios/usuarios';
 import { Inventario } from './inventario/inventario';
 import { Configuracion } from './configuracion/configuracion';
+import { Consolidado } from './consolidado/consolidado';
 
 export const routes: Routes = [
 
@@ -61,6 +62,11 @@ export const routes: Routes = [
       {
         path: 'configuracion',
         component: Configuracion
+      },
+
+      {
+        path: 'consolidado',
+        component: Consolidado
       }
 
     ]

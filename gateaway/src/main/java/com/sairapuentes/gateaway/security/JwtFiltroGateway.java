@@ -143,13 +143,23 @@ public class JwtFiltroGateway implements org.springframework.cloud.gateway.filte
             exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
             return exchange.getResponse().setComplete();
         }
+        // VENTAS PARA CONSOLIDADO
+        if (path.startsWith("/api/ventas/consolidado")) {
+            // GET → ADMIN
+            if (metodo.equals("GET") && (rol.equals("ADMIN"))) {
+                return chain.filter(exchange);
+            }
+
+            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
+            return exchange.getResponse().setComplete();
+        }
         // VENTAS
         if (path.startsWith("/api/ventas")) {
             // GET → ADMIN, GERENTE y CAJA
             if (metodo.equals("GET") && (rol.equals("ADMIN") || rol.equals("GERENTE") || rol.equals("CAJA"))) {
                 return chain.filter(exchange);
             }
-            // POST → ADMIN y CAJA
+            // POST → GERENTE y CAJA
             if (metodo.equals("POST") && (rol.equals("GERENTE") || rol.equals("CAJA"))) {
                 return chain.filter(exchange);
             }
@@ -160,6 +170,7 @@ public class JwtFiltroGateway implements org.springframework.cloud.gateway.filte
             exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
             return exchange.getResponse().setComplete();
         }
+
         // CATEGORIA
         if (path.startsWith("/api/categoria")) {
             // GET → todos
