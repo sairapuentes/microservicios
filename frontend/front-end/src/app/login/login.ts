@@ -29,7 +29,13 @@ export class Login {
 
     this.loginService.login(datos).subscribe({
       next: (respuesta) => {
-        console.log(respuesta);
+        console.log('Login exitoso', respuesta);
+        localStorage.setItem('token', respuesta.token);
+        localStorage.setItem('rol', respuesta.nombreRol);
+        localStorage.setItem('idSede', respuesta.idSede.toString());
+        localStorage.setItem('idUsuario', respuesta.idUsuario.toString());
+        localStorage.setItem('nombreUsuario', respuesta.nombreUsuario);
+        localStorage.setItem('correo', respuesta.correo);
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {

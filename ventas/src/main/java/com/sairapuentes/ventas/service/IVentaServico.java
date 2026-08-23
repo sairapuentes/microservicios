@@ -7,8 +7,10 @@ import java.util.List;
 public interface IVentaServico {
 
     List<VentaResponse> findAll();
-    VentaResponse findById(int id);
-    VentaResponse save(VentaRequest request);
-    void eliminar(int id);
+    List<VentaResponse> findAllBySede(Integer idSede);
+    VentaResponse findById(int id, Integer idSede);
+    VentaResponse save(VentaRequest request, Integer idSede);
+    void eliminar(int id, Integer idSede);
     List<VentaResponse> findByIdProducto(Integer idProducto);
+    List<VentaResponse> findByIdProductoAndIdSede(Integer idProducto, Integer idSede);
 }

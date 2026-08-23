@@ -7,10 +7,12 @@ import { VentaRequest } from '../models/ventas/venta-request';
 import { VentaResponse } from '../models/ventas/venta-response';
 import { ClientesResponse } from '../models/clientes/clientes-response';
 import { ProductosResponse } from '../models/productos/productos-response';
-import { SedeResponse } from '../models/inventario/sede-response';
+import { InventarioServices } from '../services/inventario/inventario-services';
 import { ClienteServices } from '../services/clientes/cliente-services';
+import { InventarioResponse } from '../models/inventario/inventario-response';
 import { ProductosServices } from '../services/productos/productos-services';
-import { SedeServices } from '../services/inventario/sede-services';
+import { PermisosServices } from '../services/autenticacion/permisos-services';
+
 
 @Component({
   selector: 'app-ventas',
@@ -23,28 +25,32 @@ export class Ventas implements OnInit{
   ventasFiltradas = signal<VentaResponse[]>([]);
   clientes = signal<ClientesResponse[]>([]);
   productos = signal<ProductosResponse[]>([]);
-  sedes = signal<SedeResponse[]>([]);
+  inventarios = signal<InventarioResponse[]>([]);
 
   venta = signal<VentaRequest>({
     idVenta: 0,
     idCliente: 0,
     idCiudad: 0,
     idProducto: 0,
-    cantidad: 0,
-    idSede: 0
+    cantidad: 0
   });
 
+  rolUsuario= '';
   buscar = '';
   mostrarModal = signal(false);
   tituloModal = 'Nuevo Venta'
 
-  constructor(private ventaService:VentaServices, private toastr: ToastrService, private clienteService: ClienteServices, private productoService: ProductosServices, private sedeService: SedeServices){}
+  constructor(private ventaService:VentaServices, private toastr: ToastrService, private clienteService: ClienteServices, private productoService: ProductosServices, private inventarioService: InventarioServices, public permisos: PermisosServices){}
 
   ngOnInit(): void{
     this.listarVentas();
     this.listarClientes();
-    this.listarProductos();
-    this.listarSedes();
+    this.listarProductosDisponible();
+    this.cargarPermisosUsuario();
+  }
+
+  cargarPermisosUsuario(): void {
+    this.rolUsuario = localStorage.getItem('rol') || '';
   }
 
   listarVentas(){
@@ -70,26 +76,26 @@ export class Ventas implements OnInit{
     });
   }
 
-  listarProductos(){
-    this.productoService.listar().subscribe({
-      next:(data)=>{
-        this.productos.set(data);
+  listarProductosDisponible(){
+    this.inventarioService.listar().subscribe({
+      next: (inventarios) => {
+        const disponibles = inventarios.filter(inventario => inventario.cantidad > 0);
+        this.productoService.listar().subscribe({
+          next: (productos) =>{
+            const productosDisponibles = productos.filter(producto =>
+              disponibles.some(inventario => inventario.idProducto === producto.idProducto)
+            );
+            this.productos.set(productosDisponibles);
+          },
+          error: (err) => {
+            console.error(err);
+          }
+        });
       },
-      error:(err)=>{
+      error: (err) => {
         console.error(err);
       }
-    });
-  }
-
-  listarSedes(){
-    this.sedeService.listar().subscribe({
-      next:(data)=>{
-        this.sedes.set(data);
-      },
-      error:(err)=>{
-        console.error(err);
-      }
-    });
+     });
   }
 
   crearVenta(){
@@ -101,7 +107,8 @@ export class Ventas implements OnInit{
       },
        error:(err)=>{
             console.error(err);
-            this.toastr.error(err.error.mensaje, "Error");
+            const mensaje = err.error?.mensaje || "No tiene permisos para realizar estaoperación";
+            this.toastr.error(mensaje, "Error");
         }
     });
   }
@@ -113,8 +120,7 @@ export class Ventas implements OnInit{
       idCliente: 0,
       idCiudad: 0,
       idProducto: 0,
-      cantidad: 0,
-      idSede: 0
+      cantidad: 0
     });
     this.mostrarModal.set(true);
   }
@@ -126,9 +132,8 @@ export class Ventas implements OnInit{
       idCliente: 0,
       idCiudad: 0,
       idProducto: 0,
-      cantidad: 0,
-      idSede: 0
-    }); 
+      cantidad: 0
+    });
   }
 
   guardarVenta(){
@@ -140,10 +145,7 @@ export class Ventas implements OnInit{
       this.toastr.warning("Seleccione un producto");
       return;
     }
-    if(this.venta().idSede === 0){
-      this.toastr.warning("Seleccione un sede");
-      return;
-    }
+
     if(this.venta().cantidad <= 0){
       this.toastr.warning("La cantidad debe ser mayor que cero");
       return;
@@ -174,7 +176,6 @@ export class Ventas implements OnInit{
     this.ventasFiltradas.set(
       this.ventas().filter(venta =>
         venta.nombreCliente.toLowerCase().includes(texto) ||
-        venta.nombreSede.toLowerCase().includes(texto) ||
         venta.nombreProducto.toLowerCase().includes(texto)
       )
     );

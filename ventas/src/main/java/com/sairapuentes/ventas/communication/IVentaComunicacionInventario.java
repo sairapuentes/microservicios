@@ -5,12 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = "inventario")
 public interface IVentaComunicacionInventario {
     @GetMapping("/api/inventario/producto/{idProducto}/sede/{idSede}")
-    InventarioResponse getInventario(@PathVariable("idProducto") Integer idProducto,
-                                     @PathVariable("idSede") Integer idSede);
+    InventarioResponse getInventario(@PathVariable("idProducto") Integer idProducto, @PathVariable("idSede") Integer idSede);
+
     @PutMapping("/api/inventario/restarStock")
-    void restarStock(@RequestBody InventarioRestarRequest request);
+    void restarStock(@RequestBody InventarioRestarRequest request, @RequestHeader("X-Usuario-Sede") Integer idSede, @RequestHeader("X-Usuario-Rol") String rol);
+
+    @PutMapping("/api/inventario/interno/restarStock")
+    void restarStockVenta(@RequestBody InventarioRestarRequest request);
 }

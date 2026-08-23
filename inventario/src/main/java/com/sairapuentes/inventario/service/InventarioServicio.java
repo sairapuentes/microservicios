@@ -28,6 +28,13 @@ public class InventarioServicio implements IInventarioServicio {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<InventarioResponse> findAllBySede(Integer idSede) {
+        return inventarioRepositorio.findAllBySede_IdSede(idSede)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public InventarioResponse findById(int id){

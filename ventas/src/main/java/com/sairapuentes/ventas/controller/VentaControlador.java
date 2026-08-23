@@ -20,19 +20,19 @@ public class VentaControlador {
     private IVentaServico ventaServicio;
 
     @GetMapping
-    public ResponseEntity<List<VentaResponse>> listar(){
+    public ResponseEntity<List<VentaResponse>> listar(@RequestHeader("X-Usuario-Sede") Integer idSede){
 
-        return ResponseEntity.ok(ventaServicio.findAll());
+        return ResponseEntity.ok(ventaServicio.findAllBySede(idSede));
     }
     @PostMapping("/crear")
-    public ResponseEntity<VentaResponse> crear(@Valid @RequestBody VentaRequest request){
-        VentaResponse response = ventaServicio.save(request);
+    public ResponseEntity<VentaResponse> crear(@Valid @RequestBody VentaRequest request, @RequestHeader("X-Usuario-Sede") Integer idSede){
+        VentaResponse response = ventaServicio.save(request, idSede);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VentaResponse> findById(@PathVariable Integer id){
-        VentaResponse response = ventaServicio.findById(id);
+    public ResponseEntity<VentaResponse> findById(@PathVariable Integer id, @RequestHeader("X-Usuario-Sede") Integer idSede){
+        VentaResponse response = ventaServicio.findById(id, idSede);
         return ResponseEntity.ok(response);
     }
 
@@ -42,9 +42,16 @@ public class VentaControlador {
         List<VentaResponse> ventaResponseList = ventaServicio.findByIdProducto(idProducto);
         return ResponseEntity.ok(ventaResponseList);
     }
+    
+     @GetMapping("/producto/{idProducto}/sede/{idSede}")
+    public ResponseEntity<List<VentaResponse>> findByIdProductoAndIdSede(@PathVariable Integer idProducto, @RequestHeader("X-Usuario-Sede") Integer idSede){
+        List<VentaResponse> ventaResponseList = ventaServicio.findByIdProductoAndIdSede(idProducto, idSede);
+        return ResponseEntity.ok(ventaResponseList);
+    }
+    
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Integer id){
-        ventaServicio.eliminar(id);
+    public ResponseEntity<String> eliminar(@PathVariable Integer id, @RequestHeader("X-Usuario-Sede") Integer idSede){
+        ventaServicio.eliminar(id, idSede);
         return ResponseEntity.ok("Venta eliminada correctamente");
     }
 }

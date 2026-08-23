@@ -10,6 +10,7 @@ import { ProductosResponse } from '../models/productos/productos-response';
 import { ProductosServices } from '../services/productos/productos-services';
 import { SedeResponse } from '../models/inventario/sede-response';
 import { SedeServices } from '../services/inventario/sede-services';
+import { PermisosServices } from '../services/autenticacion/permisos-services';
 
 @Component({
   selector: 'app-inventario',
@@ -19,6 +20,8 @@ import { SedeServices } from '../services/inventario/sede-services';
 })
 export class Inventario implements OnInit{
 
+  rolUsuario= '';
+  idSedeUsuario = 0;
   inventarios = signal<InventarioResponse[]>([]);
   inventarioFiltrados = signal<InventarioResponse[]>([]);
   productos = signal<ProductosResponse[]>([]);
@@ -44,12 +47,18 @@ export class Inventario implements OnInit{
   esActualizar = false;
   tituloModal = 'Nuevo Stock'
 
-  constructor(private inventarioService:InventarioServices, private toastr: ToastrService, private productoService:ProductosServices, private sedeService:SedeServices){}
+  constructor(private inventarioService:InventarioServices, private toastr: ToastrService, private productoService:ProductosServices, private sedeService:SedeServices, public permisos: PermisosServices){}
 
   ngOnInit(): void {
     this.listarInventario();
     this.listarProductos();
     this.listarSedes();
+    this.cargarPermisosUsuario();
+  }
+
+  cargarPermisosUsuario(): void {
+    this.rolUsuario = localStorage.getItem('rol') || '';
+    this.idSedeUsuario = Number(localStorage.getItem('idSede')) || 0;
   }
 
   listarInventario(): void{
@@ -123,7 +132,9 @@ export class Inventario implements OnInit{
     this.tituloModal = 'Nuevo Stock';
     this.inventario.set({
       idProducto: 0,
-      idSede: 0,
+      idSede: this.rolUsuario === 'BODEGA'
+        ? this.idSedeUsuario
+        : 0,
       cantidad: 0
     });
     this.mostrarModal.set(true);
@@ -202,17 +213,23 @@ export class Inventario implements OnInit{
   buscarInventario(): void{
     const texto = this.buscar.toLowerCase().trim();
     this.inventarioFiltrados.set(
-      this.inventarios().filter(inventario =>
-      inventario.idProducto.toString().includes(texto) ||
-      inventario.nombreSede.toLowerCase().includes(texto)
-      )
+      this.inventarios().filter(inventario =>{
+        const nombreProducto = this.obtenerNombreProducto(inventario.idProducto).toLowerCase();
+        const nombreSede = inventario.nombreSede.toLocaleLowerCase();
+        return(
+          nombreProducto.includes(texto) ||
+          nombreSede.includes(texto)
+        );
+      })
     );
   }
 
   abrirModalRestarStock(){
     this.restarStock.set({
       idProducto: 0,
-      idSede: 0,
+      idSede: this.rolUsuario === 'BODEGA'
+        ? this.idSedeUsuario
+        : 0,
       cantidad: 0
     });
     this.mostrarRestar.set(true);
@@ -241,10 +258,10 @@ export class Inventario implements OnInit{
       this.toastr.warning("La cantidad debe ser mayor que cero", "Recuerda");
       return;
     }
-    if(this.esActualizar){
-      this.actualizarInventario();
-      return;
-    }
+    // if(this.esActualizar){
+    //   this.actualizarInventario();
+    //   return;
+    // }
     this.inventarioService.restarStock(datos).subscribe({
       next:()=>{
         this.cerrarModalRestarStock();

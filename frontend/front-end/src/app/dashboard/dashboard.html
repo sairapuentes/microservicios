@@ -1,27 +1,72 @@
 <div class="dashboard">
 
-    <h1>Dashboard</h1>
+    <div class="dashboard-header">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Resumen general del supermercado</p>
+        </div>
+    </div>
 
     <div class="cards">
 
+        <!-- PRODUCTOS -->
         <div class="card">
-            <h3>Productos</h3>
-            <p>120</p>
+
+            <div class="card-icon productos">
+                📦
+            </div>
+
+            <div class="card-info">
+                <span>Productos</span>
+                <strong>{{ totalProductos() }}</strong>
+                <small>Productos registrados</small>
+            </div>
+
         </div>
 
+        <!-- CLIENTES -->
         <div class="card">
-            <h3>Clientes</h3>
-            <p>58</p>
+
+            <div class="card-icon clientes">
+                👥
+            </div>
+
+            <div class="card-info">
+                <span>Clientes</span>
+                <strong>{{ totalClientes() }}</strong>
+                <small>Clientes registrados</small>
+            </div>
+
         </div>
 
+        <!-- VENTAS -->
         <div class="card">
-            <h3>Ventas</h3>
-            <p>35</p>
+
+            <div class="card-icon ventas">
+                🛒
+            </div>
+
+            <div class="card-info">
+                <span>Ventas</span>
+                <strong>{{ totalVentas() }}</strong>
+                <small>Ventas realizadas</small>
+            </div>
+
         </div>
 
+        <!-- INVENTARIO -->
         <div class="card">
-            <h3>Inventario</h3>
-            <p>450</p>
+
+            <div class="card-icon inventario">
+                📊
+            </div>
+
+            <div class="card-info">
+                <span>Inventario</span>
+                <strong>{{ totalStock() }}</strong>
+                <small>Unidades disponibles</small>
+            </div>
+
         </div>
 
     </div>

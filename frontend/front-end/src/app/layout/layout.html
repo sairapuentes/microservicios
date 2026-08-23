@@ -1,42 +1,30 @@
 <div class="layout">
 
     <aside class="sidebar">
-
         <div class="logo">
             <h2>Supermercado</h2>
         </div>
-
         <nav>
-
             <a routerLink="/dashboard">Dashboard</a>
             <a routerLink="/productos">Productos</a>
-            <a routerLink="/clientes">Clientes</a>
+            <a [routerLink] ="usuarios() ? '/clientes' : null" [class.menu-bloqueado]="!usuarios()" [attr.aria-disabled]="!usuarios()">Clientes</a>
             <a routerLink="/inventario">Inventario</a>
-            <a routerLink="/ventas">Ventas</a>
+            <a [routerLink] ="usuarios() ? '/ventas' : null" [class.menu-bloqueado]="!usuarios()" [attr.aria-disabled]="!usuarios()">Ventas</a>
+            <a [routerLink] ="admin() ? '/consolidado' : null" [class.menu-bloqueado]="!admin()" [attr.aria-disabled]="!admin()">Consolidado</a>
 
             <div class="menu-title">
                 Administración
             </div>
 
-            <a routerLink="/usuarios">Usuarios</a>
-            <a routerLink="/configuracion">Configuración</a>
-
+            <a [routerLink] ="admin() ? '/usuarios' : null" [class.menu-bloqueado]="!admin()" [attr.aria-disabled]="!admin()">Usuarios</a>
+            <a [routerLink] ="admin() ? '/configuracion' : null" [class.menu-bloqueado]="!admin()" [attr.aria-disabled]="!admin()">Configuración</a>
         </nav>
 
         <div class="logout">
-
-            <a routerLink="/login">
-                Cerrar sesión
-            </a>
-
+            <a (click)="cerrarSesion()">Cerrar sesión</a>
         </div>
-
     </aside>
-
     <main class="contenido">
-
         <router-outlet></router-outlet>
-
     </main>
-
 </div>

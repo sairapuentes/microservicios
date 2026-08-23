@@ -5,6 +5,7 @@ import { ClienteServices } from '../services/clientes/cliente-services';
 import { ClientesRequest } from '../models/clientes/clientes-request';
 import { ClientesResponse } from '../models/clientes/clientes-response';
 import { ToastrService } from 'ngx-toastr';
+import { PermisosServices } from '../services/autenticacion/permisos-services';
 
 @Component({
   selector: 'app-clientes',
@@ -14,6 +15,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class Clientes implements OnInit{
 
+  rolUsuario= '';
+  idSedeUsuario = 0;
   clientes = signal<ClientesResponse[]>([]);
   clientesFiltrados = signal<ClientesResponse[]>([]);
 
@@ -31,11 +34,17 @@ export class Clientes implements OnInit{
   esActualizar = false;
   tituloModal = 'Nuevo Cliente'
 
-  constructor(private clienteService:ClienteServices, private toastr: ToastrService){}
+  constructor(private clienteService:ClienteServices, private toastr: ToastrService, public permisos: PermisosServices){}
   ngOnInit(): void {
     this.listarClientes();
+    this.cargarPermisosUsuario();
   }
-
+  
+  cargarPermisosUsuario(): void {
+    this.rolUsuario = localStorage.getItem('rol') || '';
+    this.idSedeUsuario = Number(localStorage.getItem('idSede')) || 0;
+  }
+  
   listarClientes(){
     this.clienteService.listar().subscribe({
       next:(data)=>{

@@ -1,7 +1,7 @@
 <div class="contenido">
     <div class="cabecera">
         <h1>Gestión de Productos</h1>
-        <button class="btn-nuevo" (click)="nuevoProducto()">
+        <button *ngIf="permisos.crearProductos()" class="btn-nuevo" (click)="nuevoProducto()">
             + Nuevo Producto
         </button>
     </div>
@@ -35,8 +35,8 @@
                 <td>{{ producto.precioVenta | currency:'COP':'symbol':'1.0-0' }}</td>
                 <td>{{ producto.ivaCompra }}%</td>
                 <td class="acciones">
-                    <button class="btn-editar" (click)="editarProducto(producto.idProducto)">✏️</button>
-                    <button class="btn-eliminar" (click)="eliminarProducto(producto.idProducto)">🗑️</button>
+                    <button *ngIf="permisos.editarProductos()" class="btn-editar" (click)="editarProducto(producto.idProducto)">✏️</button>
+                    <button *ngIf="permisos.eliminarProductos()" class="btn-eliminar" (click)="eliminarProducto(producto.idProducto)">🗑️</button>
                 </td>
             </tr>
         </tbody>

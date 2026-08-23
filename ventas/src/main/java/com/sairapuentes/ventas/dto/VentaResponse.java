@@ -2,7 +2,6 @@ package com.sairapuentes.ventas.dto;
 public class VentaResponse {
     private int idVenta;
     private int idCliente;
-    private int idCiudad;
     private int idProducto;
     private int cantidad;
     private double valorTotal;
@@ -14,10 +13,9 @@ public class VentaResponse {
     public VentaResponse() {
     }
 
-    public VentaResponse(int idVenta, int idCliente, int idCiudad, int idProducto, int cantidad, double valorTotal, int idSede, String nombreCliente, String nombreProducto, String nombreSede) {
+    public VentaResponse(int idVenta, int idCliente, int idProducto, int cantidad, double valorTotal, int idSede, String nombreCliente, String nombreProducto, String nombreSede) {
         this.idVenta = idVenta;
         this.idCliente = idCliente;
-        this.idCiudad = idCiudad;
         this.idProducto = idProducto;
         this.cantidad = cantidad;
         this.valorTotal = valorTotal;
@@ -41,14 +39,6 @@ public class VentaResponse {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
-    }
-
-    public int getIdCiudad() {
-        return idCiudad;
-    }
-
-    public void setIdCiudad(int idCiudad) {
-        this.idCiudad = idCiudad;
     }
 
     public int getIdProducto() {
