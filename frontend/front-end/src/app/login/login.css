@@ -6,6 +6,9 @@
   height: 100vh;
   background-color: #ffffff; /* Verde menta de la paleta */
   font-family: Arial, sans-serif;
+  background: linear-gradient(rgba(167, 164, 164, 0.5), rgba(167, 164, 164, 0.5)), 
+              url('../../../public/fondo4.jfif') no-repeat center center fixed;
+  background-size: cover;
 }
 
 .main-title {
@@ -65,3 +68,29 @@ input {
   background-color: #E0F2EA; /*#dc8b8b;  Amarillo al pasar el mouse */
   color: #333333/*#FFF0F0;*/
 }
+
+.password-group{
+  position: relative;
+}
+
+.password-group input{
+  padding-right: 45px;
+}
+
+.password-toggle{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #777;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.password-toggle:hover{
+  color: #f59a9a;
+}
+
